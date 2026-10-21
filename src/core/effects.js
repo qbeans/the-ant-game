@@ -28,6 +28,8 @@ function emptyModifiers() {
     producer: {},          // producer id -> sugar multiplier
     synergies: [],         // { producer, source, perUnit }: +perUnit per owned source
     sugar: 1,              // all sugar/s
+    sugarPerUnit: [],      // { source, perUnit }: all sugar/s +perUnit per owned source
+    milkPerUnit: [],       // { source, perUnit }: all Bug Milk +perUnit per owned source
     click: 1, clickShareOfSps: 0,
     lay: 1, room: 1,
     milk: 1, producerMilk: {},
@@ -46,6 +48,8 @@ function apply(m, effect) {
     case 'producerMultiplier': for (const id of effect.producers) m.producer[id] = (m.producer[id] || 1) * effect.mult; break;
     case 'synergy': m.synergies.push(effect); break;
     case 'sugarMultiplier': m.sugar *= effect.mult; break;
+    case 'sugarPerUnit': m.sugarPerUnit.push(effect); break;
+    case 'milkPerUnit': m.milkPerUnit.push(effect); break;
     case 'clickMultiplier': m.click *= effect.mult; break;
     case 'clickShareOfSps': m.clickShareOfSps += effect.share; break;
     case 'layMultiplier': m.lay *= effect.mult; break;

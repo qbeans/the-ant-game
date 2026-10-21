@@ -28,16 +28,26 @@ const TIER_NAMES = {
   multiverse: ['Infinite Picnics', 'Parallel Queens', 'Every Anthill at Once', 'Multiversal Treaty', 'The Anthill of Anthills'],
 };
 
-// Five ×2 upgrades per producer. Queens make no sugar, so theirs speed up worker production instead.
+// Queens make no sugar, so their five upgrades each do something different instead of a plain ×2.
+const QUEEN_TIERS = [
+  { desc: 'Ant Queens make workers twice as fast.', effects: [{ type: 'layMultiplier', mult: 2 }] },
+  { desc: 'Ant Queens make workers twice as fast.', effects: [{ type: 'layMultiplier', mult: 2 }] },
+  { desc: 'Worker Ants make +1% sugar per Ant Queen.', effects: [{ type: 'synergy', producer: 'worker', source: 'queen', perUnit: 0.01 }] },
+  { desc: 'Royal Feast lasts twice as long and costs half.',
+    effects: [{ type: 'feastDurationMultiplier', mult: 2 }, { type: 'feastCostMultiplier', mult: 0.5 }] },
+  { desc: 'All sugar/s +0.5% per Ant Queen.', effects: [{ type: 'sugarPerUnit', source: 'queen', perUnit: 0.005 }] },
+];
+
+// Five ×2 upgrades per producer (queens get QUEEN_TIERS instead).
 const tierUpgrades = PRODUCERS.flatMap(p => TIER_THRESHOLDS.map((threshold, i) => ({
   id: p.id + i,
   name: TIER_NAMES[p.id][i],
   cur: 'sugar',
   cost: p.cost * TIER_COST_MULTIPLIERS[i],
   tier: p.id,
-  desc: p.id === 'queen' ? 'Ant Queens make workers twice as fast.' : `${p.plural} produce twice as much.`,
+  desc: p.id === 'queen' ? QUEEN_TIERS[i].desc : `${p.plural} produce twice as much.`,
   unlock: s => s.owned[p.id] >= threshold,
-  effects: [p.id === 'queen' ? { type: 'layMultiplier', mult: 2 } : { type: 'producerMultiplier', producers: [p.id], mult: 2 }],
+  effects: p.id === 'queen' ? QUEEN_TIERS[i].effects : [{ type: 'producerMultiplier', producers: [p.id], mult: 2 }],
 })));
 
 const producerMult = (producers, mult) => ({ type: 'producerMultiplier', producers, mult });
@@ -72,8 +82,8 @@ const milkUpgrades = [
     unlock: s => s.owned.ladybug >= 5, effects: [{ type: 'producerMilkMultiplier', producer: 'ladybug', mult: 2 }] },
   { id: 'milkfed', name: 'Milk-Fed Workers', cost: 600, desc: 'Worker Ants produce twice as much.',
     unlock: s => s.milkAll >= 150, effects: [producerMult(['worker'], 2)] },
-  { id: 'creamery', name: 'Royal Creamery', cost: 1200, desc: 'Queens make workers 50% faster.',
-    unlock: s => s.owned.queen >= 15 && s.milkAll >= 500, effects: [{ type: 'layMultiplier', mult: 1.5 }] },
+  { id: 'creamery', name: 'Royal Creamery', cost: 1200, desc: 'Bug Milk +1% per Ant Queen.',
+    unlock: s => s.owned.queen >= 15 && s.milkAll >= 500, effects: [{ type: 'milkPerUnit', source: 'queen', perUnit: 0.01 }] },
   { id: 'fungbath', name: 'Fungus Milk Baths', cost: 2500, desc: 'Underground Fungus Farms produce twice as much.',
     unlock: s => s.owned.fungus >= 3, effects: [producerMult(['fungus'], 2)] },
   { id: 'shakes', name: 'Milkshake Rations', cost: 4000, desc: 'Picnic Raiding Parties produce twice as much.',

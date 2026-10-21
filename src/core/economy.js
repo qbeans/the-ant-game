@@ -31,8 +31,17 @@ export function milestoneMultiplier(s) {
 }
 
 /** Multiplier applied to every producer: achievements, unspent jelly, milestones and global upgrades. */
+/** Bonuses that grow with how many of some producer you own, e.g. "+1% per Ant Queen". */
+function perUnitMultiplier(s, list) {
+  let mult = 1;
+  for (const e of list) mult *= 1 + e.perUnit * s.owned[e.source];
+  return mult;
+}
+
 export function baseMultiplier(s) {
-  return (1 + pheromoneBonus(s)) * (1 + JELLY.bonusPerUnspent * s.jelly) * milestoneMultiplier(s) * modifiers(s).sugar;
+  const mods = modifiers(s);
+  return (1 + pheromoneBonus(s)) * (1 + JELLY.bonusPerUnspent * s.jelly) * milestoneMultiplier(s) * mods.sugar
+    * perUnitMultiplier(s, mods.sugarPerUnit);
 }
 
 export const buffSugarMultiplier = s => activeBuffMultiplier(s, 'sugarMultiplier');
@@ -70,7 +79,8 @@ export function clickValue(s) {
 
 // ---- Bug Milk, Stardust, Mana ----
 
-export const milkMultiplier = s => modifiers(s).milk * activeBuffMultiplier(s, 'milkMultiplier');
+export const milkMultiplier = s =>
+  modifiers(s).milk * perUnitMultiplier(s, modifiers(s).milkPerUnit) * activeBuffMultiplier(s, 'milkMultiplier');
 export const unitMilkPerSecond = (s, id) => (PRODUCER_BY_ID[id].milk || 0) * (modifiers(s).producerMilk[id] || 1) * milkMultiplier(s);
 
 export function milkPerSecond(s) {

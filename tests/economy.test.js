@@ -97,3 +97,42 @@ test('producers unlock by era', () => {
   assert.equal(game.producerUnlocked(s, 'ladybug'), true);
   assert.equal(game.era(s), 2);
 });
+
+test('only the first two queen upgrades speed up queens; the rest do other things', () => {
+  const s = newGame();
+  s.owned.queen = 20; s.owned.worker = 10;
+  const births = game.workerBirthRate(s);
+  for (let i = 0; i < 5; i++) s.upgrades['queen' + i] = 1;
+  assert.equal(game.workerBirthRate(s), births * 4);
+});
+
+test('Tiny Crowns: workers make +1% sugar per queen', () => {
+  const s = newGame();
+  s.owned.worker = 10; s.owned.queen = 20;
+  const before = game.producerSugarPerSecond(s, 'worker');
+  s.upgrades.queen2 = 1;
+  assert.ok(Math.abs(game.producerSugarPerSecond(s, 'worker') - before * 1.2) < 1e-9);
+});
+
+test("Queen's Gambit: Royal Feast lasts twice as long for half the milk", () => {
+  const s = newGame();
+  s.upgrades.queen3 = 1;
+  assert.equal(game.feastDuration(s), 120);
+  assert.equal(game.feastCost(s), 8);
+});
+
+test('Matriarchy: all sugar/s +0.5% per queen', () => {
+  const s = newGame();
+  s.owned.worker = 10; s.owned.queen = 40;
+  const before = game.rawSugarPerSecond(s);
+  s.upgrades.queen4 = 1;
+  assert.ok(Math.abs(game.rawSugarPerSecond(s) - before * 1.2) < 1e-9);
+});
+
+test('Royal Creamery: Bug Milk +1% per queen', () => {
+  const s = newGame();
+  s.owned.aphid = 10; s.owned.queen = 30;
+  const before = game.milkPerSecond(s);
+  s.upgrades.creamery = 1;
+  assert.ok(Math.abs(game.milkPerSecond(s) - before * 1.3) < 1e-9);
+});
