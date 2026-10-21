@@ -238,11 +238,6 @@ details[open] summary h2::after{content:" −"}
 /* Tabs (phones) */
 .tabs{display:none}
 /* Mid-size laptops: the shop has the most text per row, so give it a little more room. */
-/* Below desktop width there isn't room for the price beside the stats, so it drops to its own line, still on the right. */
-@media (max-width:1280px){
-  .pstat{grid-column:1 / -1}
-  .pcost{grid-row:4}
-}
 @media (min-width:961px) and (max-width:1280px){
   .grid{grid-template-columns:minmax(0,.9fr) minmax(0,1fr) minmax(0,1.2fr)}
   .grid.two-col{grid-template-columns:repeat(2,minmax(0,1fr))}
