@@ -6,7 +6,10 @@ import { store } from '../store.js';
 
 export function initWizards() {
   byId('spells').innerHTML = SPELLS.map(sp =>
-    `<button class="btn ghost spell" data-id="${sp.id}"><b>${sp.name}</b><small class="num"></small><small>${sp.desc}</small></button>`).join('');
+    `<button class="btn ghost spell" data-id="${sp.id}">
+      <span class="spell-head"><b>${sp.name}</b><span class="spell-cost num"></span></span>
+      <small>${sp.desc}</small>
+    </button>`).join('');
   byId('spells').addEventListener('click', e => {
     const button = e.target.closest('.spell');
     if (button && castSpell(store.state, button.dataset.id)) store.refresh();
@@ -29,7 +32,9 @@ export function renderWizards(s) {
   for (const button of byId('spells').children) {
     const spell = SPELL_BY_ID[button.dataset.id], cost = spellCost(s, spell.id);
     const active = spell.duration && isBuffActive(s, spell.id);
-    setText(button.children[1], active ? `Active · ${formatTime(s.buffs[spell.id] - s.clock)}` : `${cost} Mana`);
+    const price = button.querySelector('.spell-cost');
+    setText(price, active ? `Active ${formatTime(s.buffs[spell.id] - s.clock)}` : `${cost} Mana`);
+    price.classList.toggle('active', !!active);
     button.disabled = active || s.mana < cost;
   }
 }

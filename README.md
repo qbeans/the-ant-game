@@ -13,7 +13,8 @@ Plain HTML, CSS and JavaScript modules. No build step and no dependencies.
 npm start
 ```
 
-Then open http://localhost:8080. A server is needed because browsers don't load JavaScript modules from `file://`.
+Then open http://localhost:8080. A server is needed because browsers don't load JavaScript modules from `file://`;
+`tools/serve.py` also turns off caching so edits show up on reload.
 
 ## Test it
 
