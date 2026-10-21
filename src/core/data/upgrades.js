@@ -38,14 +38,14 @@ const QUEEN_TIERS = [
   { desc: 'All sugar/s +0.5% per Ant Queen.', effects: [{ type: 'sugarPerUnit', source: 'queen', perUnit: 0.005 }] },
 ];
 
-// Five ×2 upgrades per producer (queens get QUEEN_TIERS instead).
+// Five ×2 sugar upgrades per producer; side products like Bug Milk aren't affected. Queens get QUEEN_TIERS instead.
 const tierUpgrades = PRODUCERS.flatMap(p => TIER_THRESHOLDS.map((threshold, i) => ({
   id: p.id + i,
   name: TIER_NAMES[p.id][i],
   cur: 'sugar',
   cost: p.cost * TIER_COST_MULTIPLIERS[i],
   tier: p.id,
-  desc: p.id === 'queen' ? QUEEN_TIERS[i].desc : `${p.plural} produce twice as much.`,
+  desc: p.id === 'queen' ? QUEEN_TIERS[i].desc : `${p.plural} make twice as much sugar.`,
   unlock: s => s.owned[p.id] >= threshold,
   effects: p.id === 'queen' ? QUEEN_TIERS[i].effects : [{ type: 'producerMultiplier', producers: [p.id], mult: 2 }],
 })));
