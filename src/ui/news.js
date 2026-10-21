@@ -33,10 +33,8 @@ const HEADLINES = {
     'Andromeda Galaxy issues a travel warning: "Hide your picnics."'],
 };
 
-const SHOW_MS = 12000;          // how long a headline that fits stays up
-const SCROLL_PX_PER_SECOND = 45;
-const PAUSE_MS = 1500;          // hold at the start and end of a scrolling headline
-const FADE_MS = 400;
+const SCROLL_PX_PER_SECOND = 35;
+const STILL_MS = 12000;         // with reduced motion, headlines change in place instead of scrolling
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 let index = 0, timer = 0, scroll = null;
@@ -48,33 +46,24 @@ function headlinePool(e) {
 }
 
 /**
- * Shows the next headline on one line. If it's wider than the space, it pauses, scrolls until its end is visible,
- * pauses again, and the next headline comes after it has finished.
+ * Shows the next headline. Each one enters from the right edge, drifts slowly left until it's gone,
+ * and then the next one starts. Calling this early (e.g. on a new era) skips to the next headline.
  */
 export function rotateNews() {
   clearTimeout(timer);
+  scroll?.cancel();
   const text = byId('news'), frame = byId('newsWindow');
-  text.style.opacity = 0;
-  setTimeout(() => {
-    scroll?.cancel();
-    const pool = headlinePool(era(store.state));
-    text.textContent = pool[index++ % pool.length];
-    text.title = text.textContent;
-    text.style.opacity = 1;
-    const overflow = text.scrollWidth - frame.clientWidth;
-    frame.classList.toggle('overflowing', overflow > 0);
-    let showFor = SHOW_MS;
-    if (overflow > 0 && !reduceMotion) {
-      const travel = overflow + 16;
-      const scrollMs = (travel / SCROLL_PX_PER_SECOND) * 1000, total = scrollMs + 2 * PAUSE_MS;
-      scroll = text.animate([
-        { transform: 'translateX(0)' },
-        { transform: 'translateX(0)', offset: PAUSE_MS / total },
-        { transform: `translateX(${-travel}px)`, offset: 1 - PAUSE_MS / total },
-        { transform: `translateX(${-travel}px)` },
-      ], { duration: total, easing: 'linear', fill: 'forwards' });
-      showFor = Math.max(SHOW_MS, total + PAUSE_MS);
-    }
-    timer = setTimeout(rotateNews, showFor);
-  }, FADE_MS);
+  const pool = headlinePool(era(store.state));
+  text.textContent = pool[index++ % pool.length];
+  text.title = text.textContent;
+  if (reduceMotion) {
+    timer = setTimeout(rotateNews, STILL_MS);
+    return;
+  }
+  const start = frame.clientWidth, end = -text.scrollWidth;
+  scroll = text.animate(
+    [{ transform: `translateX(${start}px)` }, { transform: `translateX(${end}px)` }],
+    { duration: ((start - end) / SCROLL_PX_PER_SECOND) * 1000, easing: 'linear' },
+  );
+  scroll.onfinish = rotateNews;
 }
