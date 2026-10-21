@@ -3,6 +3,8 @@
 An ant-colony idle game in the style of Cookie Clicker. Click the sugar cube, raise queens, milk ladybugs,
 brew Mana with Ant Wizards, and grow from one anthill to the Andromeda Galaxy across Nuptial Flight (prestige) runs.
 
+**Play it:** https://qbeans.github.io/the-ant-game/
+
 Plain HTML, CSS and JavaScript modules. No build step and no dependencies.
 
 ## Run it
@@ -67,6 +69,10 @@ and the UI turns events into notifications and re-renders.
 - **An upgrade or Heritage upgrade:** add an entry with a list of `effects`. The effect types are listed in
   `src/core/effects.js`; add a new type there if none fits. `tests/data.test.js` fails if an entry uses an unknown type.
 - **A milestone or expedition:** add it to its data file. Expedition loot is described in `rollLoot`.
+
+## Deploying
+
+GitHub Pages serves the `main` branch as-is. Push to `main` and the site updates within a minute or two.
 
 ## Design rules from playtesting
 
