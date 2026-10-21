@@ -98,3 +98,20 @@ test('wizards brew Mana from Bug Milk', () => {
   assert.equal(s.mana, 0.5);
   assert.equal(s.milk, 98);
 });
+
+test('Pheromone Shortcut brings expeditions home 5 minutes sooner, and needs one to be out', () => {
+  const s = newGame();
+  s.owned.wizard = 1; s.mana = 100;
+  assert.equal(game.castSpell(s, 'shortcut'), false); // nothing out
+  assert.equal(s.mana, 100);
+  claimMilestones(s, 'garden');
+  s.owned.worker = 60;
+  game.sendExpedition(s, 'patio'); // 300s
+  game.sendExpedition(s, 'scout'); // 60s
+  assert.equal(game.castSpell(s, 'shortcut'), true);
+  assert.equal(s.mana, 80);
+  assert.equal(s.exp.patio.end, s.clock);
+  assert.equal(s.exp.scout.end, s.clock);
+  game.tick(s, 0);
+  assert.deepEqual(s.exp, {});
+});

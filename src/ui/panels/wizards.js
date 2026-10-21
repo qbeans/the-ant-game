@@ -1,5 +1,6 @@
 import {
   MANA, SPELLS, SPELL_BY_ID, castSpell, formatNumber as fmt, formatTime, isBuffActive, manaCap, manaPerSecond, spellCost,
+  spellUsable,
 } from '../../core/index.js';
 import { byId, percent, setText } from '../dom.js';
 import { store } from '../store.js';
@@ -35,6 +36,6 @@ export function renderWizards(s) {
     const price = button.querySelector('.spell-cost');
     setText(price, active ? `Active ${formatTime(s.buffs[spell.id] - s.clock)}` : `${cost} Mana`);
     price.classList.toggle('active', !!active);
-    button.disabled = active || s.mana < cost;
+    button.disabled = active || s.mana < cost || !spellUsable(s, spell.id);
   }
 }

@@ -4,7 +4,8 @@
  */
 export const SPELLS = [
   { id: 'conjure', name: 'Conjure Crumbs', cost: 15, desc: 'Gain 10 minutes of sugar/s right now.' },
-  { id: 'haste', name: 'Pheromone Haste', cost: 20, duration: 60, desc: 'Queens make workers ×10 for 60s.', layMultiplier: 10 },
+  { id: 'shortcut', name: 'Pheromone Shortcut', cost: 20, desc: 'Every expedition that is out comes home 5 minutes sooner.',
+    needsExpedition: true },
   { id: 'poly', name: 'Polymorph Ladybugs', cost: 25, duration: 60, desc: 'Bug Milk ×5 for 60s.', milkMultiplier: 5 },
   { id: 'summon', name: 'Summon Picnic', cost: 35, desc: 'Put a Picnic Basket in the Pantry.' },
   { id: 'hex', name: 'Hex of the Magnifying Glass', cost: 40, duration: 30, sugarMultiplier: 3,

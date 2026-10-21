@@ -60,9 +60,12 @@ export function royalFeast(s) {
   return true;
 }
 
+/** Whether a spell has anything to act on right now (Pheromone Shortcut needs an expedition out). */
+export const spellUsable = (s, id) => !SPELL_BY_ID[id]?.needsExpedition || Object.keys(s.exp).length > 0;
+
 export function castSpell(s, id) {
   const spell = SPELL_BY_ID[id];
-  if (!spell || !s.owned.wizard) return false;
+  if (!spell || !s.owned.wizard || !spellUsable(s, id)) return false;
   const cost = spellCost(s, id);
   if (s.mana < cost || (spell.duration && isBuffActive(s, id))) return false;
   s.mana -= cost;
@@ -71,6 +74,10 @@ export function castSpell(s, id) {
     const sugar = SPELL_TUNING.conjureSeconds * rawSugarPerSecond(s);
     addSugar(s, sugar);
     emit({ kind: 'spell', text: `Conjure Crumbs made <b>${formatNumber(sugar)}</b> sugar.` });
+  } else if (id === 'shortcut') {
+    const trips = Object.values(s.exp);
+    for (const run of trips) run.end = Math.max(s.clock, run.end - SPELL_TUNING.shortcutSeconds);
+    emit({ kind: 'spell', text: `${trips.length === 1 ? 'Your expedition is' : `All ${trips.length} expeditions are`} <b>5 minutes</b> closer to home.` });
   } else if (id === 'summon') {
     s.pantry.basket++;
     emit({ kind: 'spell', text: 'A <b>Picnic Basket</b> appeared in the Pantry.' });
