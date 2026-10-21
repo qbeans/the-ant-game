@@ -19,8 +19,9 @@ export function initShop() {
       ${icon(p.icon)}
       <span class="pname">${p.name}</span>
       <span class="pdesc">${p.desc}</span>
+      <span class="pside"><span class="powned">0</span></span>
       <span class="pstat num"></span>
-      <span class="pside"><span class="powned">0</span><span class="pcost num"></span></span>
+      <span class="pcost num"></span>
     </button>`).join('');
 
   byId('prods').addEventListener('click', e => {

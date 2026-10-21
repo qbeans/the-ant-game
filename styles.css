@@ -165,12 +165,12 @@ canvas#colony{width:100%;height:300px;display:block;border-radius:12px;backgroun
 .pname{font-weight:600}
 /* Name and the count/price share the top row; the description runs underneath across the rest of the card. */
 .pdesc{font-size:12.5px;color:var(--ink-dim);grid-column:2 / -1}
-/* Stat lines run under the icon and price, across the whole card, so they stay on one line each. */
-.pstat{font:500 11.5px var(--f-mono);color:var(--ink-faint);grid-column:1 / -1;white-space:pre-line;margin-top:4px}
+/* Bottom row: the Each/All stat lines across the card, with the price on the right. */
+.pstat{font:500 11.5px var(--f-mono);color:var(--ink-faint);grid-column:1 / 3;grid-row:3;white-space:pre-line;margin-top:4px;min-width:0}
 .pstat:empty{display:none}
 .pside{grid-column:3;grid-row:1;text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:2px}
 .powned{font:700 24px var(--f-ui);font-variant-numeric:tabular-nums;color:var(--ink)}
-.pcost{font:500 12.5px var(--f-mono);color:var(--honey);white-space:nowrap}
+.pcost{font:500 12.5px var(--f-mono);color:var(--honey);white-space:nowrap;grid-column:3;grid-row:3;justify-self:end;align-self:center;margin-top:4px}
 .prod.mystery .pname,.prod.mystery .pdesc{color:var(--ink-faint)}
 .prod.mystery .ico{opacity:.25;filter:brightness(0)}
 .upgs{display:flex;flex-direction:column;gap:6px}
@@ -238,6 +238,11 @@ details[open] summary h2::after{content:" −"}
 /* Tabs (phones) */
 .tabs{display:none}
 /* Mid-size laptops: the shop has the most text per row, so give it a little more room. */
+/* Below desktop width there isn't room for the price beside the stats, so it drops to its own line, still on the right. */
+@media (max-width:1280px){
+  .pstat{grid-column:1 / -1}
+  .pcost{grid-row:4}
+}
 @media (min-width:961px) and (max-width:1280px){
   .grid{grid-template-columns:minmax(0,.9fr) minmax(0,1fr) minmax(0,1.2fr)}
   .grid.two-col{grid-template-columns:repeat(2,minmax(0,1fr))}
