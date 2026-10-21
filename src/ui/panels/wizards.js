@@ -18,14 +18,15 @@ export function initWizards() {
 }
 
 function brewingStatus(s, cap) {
+  if (!s.owned.wizard) return 'Build an Ant Wizard Tower to brew Mana and cast spells.';
   if (s.mana >= cap - 0.01) return 'Mana is full. Cast a spell.';
   if (s.milk < 1) return 'Out of Bug Milk, so brewing has stopped.';
   const rate = manaPerSecond(s);
   return `Brewing ${fmt(rate, 2)} Mana/s from ${fmt(rate * MANA.milkPerMana, 2)} milk/s`;
 }
 
+// Always render, even with no towers: after a Nuptial Flight the card must show the new run's Mana (0), not the last run's.
 export function renderWizards(s) {
-  if (!s.owned.wizard) return;
   const cap = manaCap(s);
   setText(byId('manaTxt'), `Mana ${fmt(s.mana, 1)} / ${fmt(cap)}`);
   byId('manaBar').style.width = percent(s.mana, cap);
@@ -36,6 +37,6 @@ export function renderWizards(s) {
     const price = button.querySelector('.spell-cost');
     setText(price, active ? `Active ${formatTime(s.buffs[spell.id] - s.clock)}` : `${cost} Mana`);
     price.classList.toggle('active', !!active);
-    button.disabled = active || s.mana < cost || !spellUsable(s, spell.id);
+    button.disabled = !s.owned.wizard || active || s.mana < cost || !spellUsable(s, spell.id);
   }
 }

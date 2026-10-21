@@ -73,3 +73,12 @@ test('old saves are migrated: missing fields filled, brood folded into workers',
   assert.equal(s.dust, 0);
   assert.equal('brood' in s, false);
 });
+
+test('Mana and Wizard Towers reset on a Nuptial Flight', () => {
+  const s = newGame();
+  claimMilestones(s, 'garden', 'picnic');
+  s.owned.wizard = 5; s.mana = 27; s.sugarRun = 1e9;
+  const next = game.nuptialFlight(s);
+  assert.equal(next.mana, 0);
+  assert.equal(next.owned.wizard, 0);
+});
