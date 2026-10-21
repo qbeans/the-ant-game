@@ -64,7 +64,6 @@ export function applyReveals() {
   byId('tabNest').hidden = !nestPanelHasContent;
   const grid = document.querySelector('.grid');
   grid.style.setProperty('--cols', nestPanelHasContent ? 3 : 2);
-  grid.classList.toggle('two-col', !nestPanelHasContent);
   grid.style.setProperty('--gridmax', nestPanelHasContent ? 'none' : '940px');
   if (!nestPanelHasContent && byId('p-nest').classList.contains('on')) showPanel('p-colony');
   return colonyAppeared;

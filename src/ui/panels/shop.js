@@ -19,9 +19,8 @@ export function initShop() {
       ${icon(p.icon)}
       <span class="pname">${p.name}</span>
       <span class="pdesc">${p.desc}</span>
-      <span class="pside"><span class="powned">0</span></span>
       <span class="pstat num"></span>
-      <span class="pcost num"></span>
+      <span class="pside"><span class="powned">0</span><span class="pcost num"></span></span>
     </button>`).join('');
 
   byId('prods').addEventListener('click', e => {
@@ -53,27 +52,22 @@ function isRevealed(s, p, index) {
     index === 0 || s.owned[p.id] > 0 || s.sugarRun >= p.cost * 0.4 || nextMilestone(s)?.producer === p.id);
 }
 
-/**
- * Two lines: what one of these makes, then what all of yours make together.
- * Kept short ("Each 4.93 sugar · 0.02 milk /s") so each fits on one line across the card.
- */
+/** Two lines: what one of these makes, then what all of yours make together. */
 function statLines(s, p) {
   const owned = s.owned[p.id];
   if (p.id === 'queen') {
     const each = workersPerQueenPerSecond(s) * 60;
-    return `Each ${fmt(each, 1)} workers/min` + (owned ? `\nAll ${fmt(owned)}: ${fmt(each * owned, 1)} workers/min` : '');
+    return `Each: ${fmt(each, 1)} workers/min` + (owned ? `\nAll ${fmt(owned)}: ${fmt(each * owned, 1)} workers/min` : '');
   }
   const manaEach = p.mana ? manaPerSecond(s) / Math.max(1, s.owned.wizard) || p.mana : 0;
-  const num = n => fmt(n, n < 10 ? 2 : 1);
-  // "dust" rather than "stardust" keeps the longest lines (Astronauts, Lunar Mines) on one line on phones.
   const describe = (sugar, units) => [
-    `${num(sugar)} sugar`,
-    p.milk && `${num(unitMilkPerSecond(s, p.id) * units)} milk`,
-    p.dust && `${num(unitDustPerSecond(s, p.id) * units)} dust`,
-    p.mana && `${num(manaEach * units)} Mana`,
-  ].filter(Boolean).join(' · ') + ' /s';
+    `${fmt(sugar, sugar < 10 ? 2 : 1)} sugar/s`,
+    p.milk && `${fmt(unitMilkPerSecond(s, p.id) * units, 2)} milk/s`,
+    p.dust && `${fmt(unitDustPerSecond(s, p.id) * units, 2)} stardust/s`,
+    p.mana && `${fmt(manaEach * units, 2)} Mana/s`,
+  ].filter(Boolean).join(' + ');
   const away = p.id === 'worker' ? awayCount(s) : 0;
-  let text = `Each ${describe(unitSugarPerSecond(s, p.id), 1)}`;
+  let text = `Each: ${describe(unitSugarPerSecond(s, p.id), 1)}`;
   if (owned) text += `\nAll ${fmt(owned)}: ${describe(producerSugarPerSecond(s, p.id), owned)}` + (away ? ` (${fmt(away)} away)` : '');
   return text;
 }
