@@ -1,0 +1,253 @@
+<meta charset="utf-8">
+<title>The Ant Game</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Rubik+Dirt&family=Rubik:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-ant" viewBox="0 0 32 32">
+      <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"><path d="M14 14 8 10M14 16.5 6.5 17M14 19 8 24.5M18 14 24 10M18 16.5 25.5 17M18 19 24 24.5M15 6 12.5 2M17 6 19.5 2"/></g>
+      <g fill="currentColor"><ellipse cx="16" cy="8" rx="3.2" ry="3"/><ellipse cx="16" cy="15.5" rx="2.4" ry="3.4"/><ellipse cx="16" cy="24" rx="4.4" ry="5.6"/></g>
+    </symbol>
+    <symbol id="i-worker" viewBox="0 0 32 32"><use href="#i-ant" style="color:#f1e6d8"/></symbol>
+    <symbol id="i-queen" viewBox="0 0 32 32">
+      <g transform="translate(2 4) scale(.875)"><use href="#i-ant" style="color:#f1e6d8"/></g>
+      <path d="M10.5 6.5 11.5 1 14.3 4 16 .5 17.7 4 20.5 1 21.5 6.5Z" style="fill:var(--honey)"/>
+    </symbol>
+    <symbol id="i-aphid" viewBox="0 0 32 32">
+      <g stroke="#6e9a4e" stroke-width="1.5" stroke-linecap="round"><path d="M11 23 8 27M16 24v4M21 23l3 4M24 13l4-4M8 13 4 9"/></g>
+      <ellipse cx="16" cy="17" rx="10" ry="7.5" style="fill:var(--leaf)"/><ellipse cx="13" cy="14.5" rx="4" ry="2" fill="#c3e6a6" opacity=".7"/>
+      <circle cx="25" cy="15" r="2.6" fill="#5f8a40"/>
+    </symbol>
+    <symbol id="i-ladybug" viewBox="0 0 32 32">
+      <path d="M9.5 9a6.5 5 0 0 1 13 0Z" fill="#17100b"/>
+      <circle cx="16" cy="18" r="10" style="fill:var(--lady)"/>
+      <path d="M16 8v20" stroke="#17100b" stroke-width="1.4"/>
+      <g fill="#17100b"><circle cx="11" cy="15" r="2"/><circle cx="21" cy="15" r="2"/><circle cx="12" cy="22" r="2.2"/><circle cx="20" cy="22" r="2.2"/></g>
+      <circle cx="12" cy="13" r="1.4" fill="#fff" opacity=".5"/>
+    </symbol>
+    <symbol id="i-fungus" viewBox="0 0 32 32">
+      <path d="M13 17h6l1 11h-8Z" fill="#e8dccb"/>
+      <path d="M4 18C4 9 28 9 28 18Z" fill="#c9845a"/>
+      <g fill="#f3e3cf"><circle cx="11" cy="14" r="1.8"/><circle cx="18" cy="12" r="1.5"/><circle cx="23" cy="15.5" r="1.3"/></g>
+    </symbol>
+    <symbol id="i-basket" viewBox="0 0 32 32">
+      <path d="M8 13C8 4 24 4 24 13" stroke="#b07a3e" stroke-width="2.2" fill="none"/>
+      <path d="M4 13h24l-3 14H7Z" fill="#c9924f"/>
+      <path d="M4 13h24v3.5H4Z" style="fill:var(--lady)"/>
+      <path d="M8 13h3.5v3.5H8ZM15 13h3.5v3.5H15ZM22 13h3.5v3.5H22Z" fill="#fff4ea"/>
+      <path d="M9 20h14M10 24h12" stroke="#a6713a" stroke-width="1.4"/>
+    </symbol>
+    <symbol id="i-sugar" viewBox="0 0 32 32">
+      <path d="M16 3 28 9.5 16 16 4 9.5Z" fill="#ffffff"/><path d="M4 9.5 16 16v13L4 22.5Z" fill="#e6dccd"/><path d="M28 9.5 16 16v13l12-6.5Z" fill="#cbbfae"/>
+    </symbol>
+    <symbol id="i-bolt" viewBox="0 0 32 32"><path d="M18 2 7 18h7l-2 12 13-17h-8Z" style="fill:var(--honey)"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 32 32"><path d="M16 3C11 11 7 15.5 7 20a9 9 0 0 0 18 0c0-4.5-4-9-9-17Z" style="fill:var(--honey)"/><path d="M12 20a4 4 0 0 0 4 4" stroke="#fff3cf" stroke-width="2" fill="none" stroke-linecap="round"/></symbol>
+    <symbol id="i-milk" viewBox="0 0 32 32"><path d="M16 3C11 11 7 15.5 7 20a9 9 0 0 0 18 0c0-4.5-4-9-9-17Z" style="fill:var(--milk)"/></symbol>
+    <symbol id="i-pop" viewBox="0 0 32 32"><path d="M15 22h2v8h-2Z" fill="#d9b88a"/><rect x="9" y="3" width="14" height="20" rx="7" fill="#f28fb0"/><path d="M9 11h14v5H9Z" fill="#ffd36e"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 32 32"><path d="M5 27C5 12 14 5 28 4c0 14-8 23-23 23Z" style="fill:var(--leaf)"/><path d="M5 27 20 12" stroke="#4d7232" stroke-width="1.6"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 32 32"><path d="M8 3v26" stroke="#d6c7b3" stroke-width="2"/><path d="M9 4h17l-4 6 4 6H9Z" style="fill:var(--lady)"/></symbol>
+    <symbol id="i-beetle" viewBox="0 0 32 32">
+      <g stroke="#2a1d14" stroke-width="1.6" stroke-linecap="round"><path d="M10 14 5 11M10 19 4 20M10 24 6 28M22 14 27 11M22 19 28 20M22 24 26 28M13 7 9 2M19 7 23 2"/></g>
+      <ellipse cx="16" cy="19" rx="8" ry="10" fill="#4a6b8a"/><path d="M16 9v20" stroke="#2c4157" stroke-width="1.2"/>
+      <ellipse cx="16" cy="8" rx="4.5" ry="3.5" fill="#2c4157"/><ellipse cx="13" cy="15" rx="2" ry="3" fill="#7fa0c0" opacity=".6"/>
+    </symbol>
+    <symbol id="i-wizard" viewBox="0 0 32 32">
+      <path d="M16 1 24 22H8Z" fill="#6c58c9"/><path d="M5 22h22v3H5Z" fill="#4b3c96"/>
+      <g style="fill:var(--honey)"><circle cx="15" cy="10" r="1.3"/><circle cx="18.5" cy="15" r="1.1"/><circle cx="13" cy="17" r="1"/></g>
+      <use href="#i-ant" x="8" y="18" width="16" height="16" style="color:#f1e6d8"/>
+    </symbol>
+    <symbol id="i-rail" viewBox="0 0 32 32">
+      <rect x="6" y="5" width="20" height="18" rx="4" fill="#c9845a"/><rect x="9" y="8" width="14" height="6" rx="1.5" fill="#f3e3cf"/>
+      <circle cx="11" cy="19" r="1.6" style="fill:var(--honey)"/><circle cx="21" cy="19" r="1.6" style="fill:var(--honey)"/>
+      <path d="M8 27h16M10 23l-3 6M22 23l3 6" stroke="#d6c7b3" stroke-width="1.6" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-globe" viewBox="0 0 32 32">
+      <circle cx="16" cy="16" r="12" fill="#3f6f9e"/>
+      <path d="M9 9c3 1 4 4 2 6s1 5 4 5M20 6c-1 3 2 4 4 4s2 4 0 6M18 22c2 1 3 3 2 5" stroke="#93c46e" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <circle cx="16" cy="16" r="12" fill="none" stroke="#2a1d14" stroke-width="1.2"/>
+    </symbol>
+    <symbol id="i-rocket" viewBox="0 0 32 32">
+      <path d="M16 2c5 4 7 10 6 18H10C9 12 11 6 16 2Z" fill="#f4ece1"/><circle cx="16" cy="12" r="3" fill="#3f6f9e"/>
+      <path d="M10 16 5 23h6ZM22 16l5 7h-6Z" style="fill:var(--lady)"/><path d="M12 21h8l-2 7h-4Z" style="fill:var(--honey)"/>
+    </symbol>
+    <symbol id="i-moon" viewBox="0 0 32 32">
+      <circle cx="16" cy="16" r="12" fill="#ece5d6"/>
+      <g fill="#cfc6b3"><circle cx="11" cy="12" r="3"/><circle cx="20" cy="19" r="2.4"/><circle cx="18" cy="9" r="1.5"/><circle cx="12" cy="21" r="1.6"/></g>
+    </symbol>
+    <symbol id="i-sun" viewBox="0 0 32 32">
+      <g stroke="#f4b740" stroke-width="2" stroke-linecap="round"><path d="M16 1v5M16 26v5M1 16h5M26 16h5M5 5l3.5 3.5M23.5 23.5 27 27M5 27l3.5-3.5M23.5 8.5 27 5"/></g>
+      <circle cx="16" cy="16" r="8" fill="#ffd36e"/><circle cx="16" cy="16" r="8" fill="none" stroke="#2a1d14" stroke-width="1" stroke-dasharray="1.5 2"/>
+    </symbol>
+    <symbol id="i-swirl" viewBox="0 0 32 32">
+      <path d="M16 16c0-2 3-3 4-1s-1 5-4 5-6-3-5-7 6-6 10-4 6 7 3 11-9 6-13 2" stroke="#b9a6ff" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <circle cx="16" cy="16" r="1.8" fill="#efe6ff"/>
+    </symbol>
+    <symbol id="i-hourglass" viewBox="0 0 32 32">
+      <path d="M8 3h16M8 29h16" stroke="#c9924f" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M10 4h12c0 6-4 8-6 12 2 4 6 6 6 12H10c0-6 4-8 6-12-2-4-6-6-6-12Z" fill="#dbe7f0" opacity=".85"/>
+      <path d="M12 26h8c-1-3-3-4-4-6-1 2-3 3-4 6Z" style="fill:var(--honey)"/>
+    </symbol>
+    <symbol id="i-galaxy" viewBox="0 0 32 32">
+      <ellipse cx="16" cy="16" rx="13" ry="6" fill="#6c58c9" opacity=".45" transform="rotate(-25 16 16)"/>
+      <ellipse cx="16" cy="16" rx="8" ry="3.5" fill="#b9a6ff" opacity=".7" transform="rotate(-25 16 16)"/>
+      <circle cx="16" cy="16" r="2.6" fill="#efe6ff"/>
+      <g fill="#efe6ff"><circle cx="6" cy="9" r=".8"/><circle cx="27" cy="22" r=".8"/><circle cx="24" cy="7" r=".6"/><circle cx="8" cy="25" r=".6"/></g>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="app">
+  <header class="top">
+    <div class="brand"><h1>The Ant Game</h1><span class="era" id="era">Era 1 · The Anthill</span></div>
+    <div class="ticker" id="news" aria-live="off"></div>
+  </header>
+
+  <div class="hud" id="hud">
+    <div class="stat big"><span class="k">Sugar</span><span class="v" id="hSugar">0</span><span class="sub" id="hSps">0 per second</span></div>
+    <div class="stat milk" id="stMilk" hidden><span class="k">Bug Milk</span><span class="v" id="hMilk">0</span><span class="sub" id="hMps">0 per second</span></div>
+    <div class="stat dust" id="stDust" hidden><span class="k">Stardust</span><span class="v" id="hDust">0</span><span class="sub" id="hDps">0 per second</span></div>
+    <div class="stat" id="stAnts" hidden><span class="k">Ants</span><span class="v" id="hAnts">0</span><span class="sub" id="hAway">0 per second</span></div>
+    <div class="buffs" id="hBuffs"></div>
+  </div>
+
+  <main class="grid">
+    <section class="panel on" id="p-colony" aria-label="Colony">
+      <div class="card">
+        <div class="cubewrap" id="cubewrap">
+          <button class="cube" id="cube" aria-label="Collect sugar">
+            <svg viewBox="0 0 200 200" aria-hidden="true">
+              <path d="M100 18 176 58 100 98 24 58Z" fill="#fffdf8"/>
+              <path d="M24 58 100 98v86L24 144Z" fill="#ece2d3"/>
+              <path d="M176 58 100 98v86l76-40Z" fill="#d3c6b2"/>
+              <g fill="#fff" opacity=".9"><path d="M70 50l6-3 6 3-6 3Z"/><path d="M118 40l5-2.5 5 2.5-5 2.5Z"/><path d="M128 70l4-2 4 2-4 2Z"/></g>
+              <g fill="#cfc2ad" opacity=".9"><path d="M48 96l6 3v7l-6-3Z"/><path d="M70 130l5 2.5v6l-5-2.5Z"/></g>
+              <g fill="#b9ab95" opacity=".9"><path d="M140 110l6-3v7l-6 3Z"/><path d="M122 146l5-2.5v6l-5 2.5Z"/></g>
+              <path d="M100 98v86" stroke="#fff" stroke-opacity=".5"/>
+            </svg>
+          </button>
+          <span class="perclick num" id="perClick">+1 per click</span>
+        </div>
+        <div id="colonyView" hidden>
+        <canvas id="colony" aria-label="Cross-section of your ant colony"></canvas>
+        <div class="colonyfoot"><span id="cfBrood">Workers 0 / 20 room</span><span id="cfLay">No queen yet</span></div>
+        </div>
+      </div>
+
+      <details class="card" id="records" hidden>
+        <summary><h2>Records</h2></summary>
+        <div class="gap-top">
+          <dl class="stats" id="stats"></dl>
+          <h3 id="achHead">Achievements</h3>
+          <div class="achs" id="achs"></div>
+          <h3 class="section-top">Playtest</h3>
+          <div class="row">
+            <span class="hint">Game speed</span>
+            <div class="amt" id="speed"><button data-v="1" aria-pressed="true">1×</button><button data-v="10" aria-pressed="false">10×</button><button data-v="60" aria-pressed="false">60×</button></div>
+          </div>
+          <div class="row list-top" id="resetRow">
+            <button class="btn ghost" id="resetBtn">Wipe save…</button>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <section class="panel" id="p-nest" aria-label="Nest and expeditions" hidden>
+      <div class="card milestone" id="msCard" hidden>
+        <span class="eyebrow" id="msEyebrow">Next milestone</span>
+        <h2 id="msName">Claim the Garden</h2>
+        <p class="hint" id="msEffect"></p>
+        <div class="req"><span class="tick" id="msTick"></span><span id="msReq"></span></div>
+        <div class="bar"><i id="msBar"></i></div>
+        <div class="row spread gap-top">
+          <span class="hint num" id="msCost"></span>
+          <button class="btn" id="msBuy">Claim</button>
+        </div>
+      </div>
+
+      <div class="card flight" id="flightCard" hidden>
+        <span class="eyebrow">Prestige</span>
+        <h2>Nuptial Flight</h2>
+        <p class="hint">Winged queens leave to found a new colony. Your run resets; you keep achievements and earn Royal Jelly. Each unspent jelly adds +2% sugar/s, or spend it on Heritage.</p>
+        <div class="row spread gap-top">
+          <div><div class="jelly" id="flGain">+0</div><div class="hint num" id="flNext"></div></div>
+          <button class="btn" id="flBtn">Begin flight</button>
+        </div>
+      </div>
+
+      <div class="card" id="nestCard" hidden>
+        <h2>The Nest</h2>
+        <p class="hint">Queens make new Worker Ants for free while the nest has room. Dig chambers to make room for more workers.</p>
+        <div class="meter-label"><span class="num" id="nestTxt">Workers 0 / 20</span><span class="hint num" id="nestRate"></span></div>
+        <div class="bar leaf meter"><i id="nestBar"></i></div>
+        <div class="nestgrid">
+          <button class="btn ghost" id="digBtn"><span>Dig a Nest Chamber</span><small id="digCost">50 sugar · +25 room</small></button>
+          <button class="btn ghost" id="feastBtn" hidden><span>Royal Feast</span><small id="feastCost">15 milk · queens ×5 for 60s</small></button>
+        </div>
+      </div>
+
+      <div class="card" id="wizCard" hidden>
+        <h2>Ant Wizards</h2>
+        <p class="hint">Wizard Towers brew Mana from Bug Milk, 4 milk for each Mana, until Mana is full. Spend Mana on spells.</p>
+        <div class="meter-label"><span class="num" id="manaTxt">Mana 0 / 30</span><span class="hint num" id="manaRate"></span></div>
+        <div class="bar mana meter"><i id="manaBar"></i></div>
+        <div class="spells" id="spells"></div>
+      </div>
+
+      <div class="card" id="expCard" hidden>
+        <h2>Foraging Expeditions</h2>
+        <p class="hint">Send a squad out. They don't work while they're away. Loot lands in the Pantry for you to use when you choose.</p>
+        <p class="num exp-home" id="expHome"></p>
+        <div id="exps" class="list-top"></div>
+      </div>
+
+      <div class="card" id="pantryCard" hidden>
+        <h2>Buff Pantry</h2>
+        <p class="hint list-intro">Buffs stack. Use a Popsicle Chunk during a Picnic Basket for a bigger payout.</p>
+        <div class="pantry" id="pantry"></div>
+      </div>
+
+      <div class="card" id="heritCard" hidden>
+        <h2>Heritage</h2>
+        <p class="hint">Permanent. Bought with Royal Jelly. <span class="num" id="jellyHave"></span></p>
+        <div class="herit" id="herit"></div>
+      </div>
+    </section>
+
+    <section class="panel" id="p-shop" aria-label="Shop">
+      <div class="card" id="upgCard" hidden>
+        <h2>Upgrades</h2>
+        <div class="upgs list-top" id="upgs"></div>
+      </div>
+      <div class="card">
+        <div class="row spread list-intro">
+          <h2 class="flush">Colony</h2>
+          <div class="amt" id="amt"><button data-v="1" aria-pressed="true">×1</button><button data-v="10" aria-pressed="false">×10</button><button data-v="max" aria-pressed="false">Max</button></div>
+        </div>
+        <div class="prods" id="prods"></div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabs" role="tablist" aria-label="Panels">
+    <button role="tab" aria-selected="true" data-tab="p-colony">Colony</button>
+    <button role="tab" aria-selected="false" data-tab="p-nest" id="tabNest" hidden>Nest &amp; trips<span class="dot" id="nestDot" hidden></span></button>
+    <button role="tab" aria-selected="false" data-tab="p-shop">Shop<span class="dot" id="shopDot" hidden></span></button>
+  </nav>
+  <div id="toasts" aria-live="polite"></div>
+
+  <div class="overlay" id="modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+      <h2 id="mTitle">Begin the Nuptial Flight?</h2>
+      <div id="mBody"></div>
+      <div class="row end list-top" id="mActions"></div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="src/main.js"></script>
