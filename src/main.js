@@ -3,7 +3,7 @@
 import { tick } from './core/index.js';
 import { markColonyDirty, startColony } from './ui/colony/canvas.js';
 import { handleEvents } from './ui/notifications.js';
-import { NEWS_INTERVAL_MS, rotateNews } from './ui/news.js';
+import { rotateNews } from './ui/news.js';
 import { render } from './ui/render.js';
 import { loadGame, saveGame, serialize } from './ui/save.js';
 import { replaceState, store } from './ui/store.js';
@@ -53,8 +53,7 @@ function start(hotData) {
   initPantry(); initShop(); initHeritage(); initRecords();
   wireTabs(markColonyDirty);
 
-  rotateNews();
-  setInterval(rotateNews, NEWS_INTERVAL_MS);
+  rotateNews(); // schedules itself from here on
   setInterval(() => saveGame(store.state), AUTOSAVE_MS);
   document.addEventListener('visibilitychange', () => { if (document.hidden) saveGame(store.state); });
 

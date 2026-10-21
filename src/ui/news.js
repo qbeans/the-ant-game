@@ -33,8 +33,13 @@ const HEADLINES = {
     'Andromeda Galaxy issues a travel warning: "Hide your picnics."'],
 };
 
-export const NEWS_INTERVAL_MS = 12000;
-let index = 0;
+const SHOW_MS = 12000;          // how long a headline that fits stays up
+const SCROLL_PX_PER_SECOND = 45;
+const PAUSE_MS = 1500;          // hold at the start and end of a scrolling headline
+const FADE_MS = 400;
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+let index = 0, timer = 0, scroll = null;
 
 /** Headlines for the current era. Past the Backyard, the current era's news shows twice as often as the last era's. */
 function headlinePool(e) {
@@ -42,9 +47,34 @@ function headlinePool(e) {
   return [...HEADLINES[e], ...HEADLINES[e], ...HEADLINES[e - 1]];
 }
 
+/**
+ * Shows the next headline on one line. If it's wider than the space, it pauses, scrolls until its end is visible,
+ * pauses again, and the next headline comes after it has finished.
+ */
 export function rotateNews() {
-  const pool = headlinePool(era(store.state));
-  const el = byId('news');
-  el.style.opacity = 0;
-  setTimeout(() => { el.textContent = pool[index++ % pool.length]; el.style.opacity = 1; }, 400);
+  clearTimeout(timer);
+  const text = byId('news'), frame = byId('newsWindow');
+  text.style.opacity = 0;
+  setTimeout(() => {
+    scroll?.cancel();
+    const pool = headlinePool(era(store.state));
+    text.textContent = pool[index++ % pool.length];
+    text.title = text.textContent;
+    text.style.opacity = 1;
+    const overflow = text.scrollWidth - frame.clientWidth;
+    frame.classList.toggle('overflowing', overflow > 0);
+    let showFor = SHOW_MS;
+    if (overflow > 0 && !reduceMotion) {
+      const travel = overflow + 16;
+      const scrollMs = (travel / SCROLL_PX_PER_SECOND) * 1000, total = scrollMs + 2 * PAUSE_MS;
+      scroll = text.animate([
+        { transform: 'translateX(0)' },
+        { transform: 'translateX(0)', offset: PAUSE_MS / total },
+        { transform: `translateX(${-travel}px)`, offset: 1 - PAUSE_MS / total },
+        { transform: `translateX(${-travel}px)` },
+      ], { duration: total, easing: 'linear', fill: 'forwards' });
+      showFor = Math.max(SHOW_MS, total + PAUSE_MS);
+    }
+    timer = setTimeout(rotateNews, showFor);
+  }, FADE_MS);
 }

@@ -37,8 +37,12 @@ button:focus-visible{outline:2px solid var(--honey);outline-offset:2px}
 .brand{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 h1{font:400 clamp(26px,3.4vw,38px)/1 var(--f-display);margin:0;color:var(--honey);letter-spacing:.01em;text-wrap:balance}
 .era{font:500 12px/1 var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--ink-dim);border:1px solid var(--line);border-radius:99px;padding:6px 10px}
-.ticker{flex:1 1 320px;min-width:0;font-style:italic;color:var(--ink-dim);font-size:14px;transition:opacity .4s}
-.ticker::before{content:"Anthill Gazette — ";font:500 11px var(--f-mono);font-style:normal;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+/* One line, always. Headlines too long for the space scroll across (see src/ui/news.js). */
+.ticker{flex:1 1 320px;min-width:0;display:flex;align-items:baseline;gap:6px;white-space:nowrap;font-size:14px}
+.ticker-label{flex:none;font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+.ticker-window{flex:1;min-width:0;overflow:hidden}
+.ticker-window.overflowing{-webkit-mask-image:linear-gradient(90deg,transparent,#000 12px,#000 calc(100% - 16px),transparent);mask-image:linear-gradient(90deg,transparent,#000 12px,#000 calc(100% - 16px),transparent)}
+.ticker-text{display:inline-block;font-style:italic;color:var(--ink-dim);transition:opacity .4s;will-change:transform}
 
 /* HUD */
 .hud{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:6px 22px;
@@ -248,4 +252,4 @@ details[open] summary h2::after{content:" −"}
   canvas#colony{height:240px}
 }
 @media (max-width:420px){.nestgrid{grid-template-columns:1fr}}
-@media (prefers-reduced-motion:reduce){.reveal{animation:none}.pop{animation:none;opacity:0}.cube,.toast{transition:none;animation:none}}
+@media (prefers-reduced-motion:reduce){.ticker-window{text-overflow:ellipsis}.ticker-text{display:inline}.reveal{animation:none}.pop{animation:none;opacity:0}.cube,.toast{transition:none;animation:none}}
