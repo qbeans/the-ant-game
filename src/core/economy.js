@@ -105,7 +105,8 @@ export const spellCost = (s, id) => Math.ceil(SPELL_BY_ID[id].cost * modifiers(s
 
 export const nestRoom = s => Math.floor((NEST.baseRoom + NEST.roomPerChamber * s.chambers) * modifiers(s).room);
 export const roomPerChamber = s => Math.floor(NEST.roomPerChamber * modifiers(s).room);
-export const chamberCost = s => Math.ceil(NEST.chamberBaseCost * Math.pow(NEST.chamberCostGrowth, s.chambers));
+export const chamberCost = s =>
+  Math.ceil(NEST.chamberBaseCost * Math.pow(NEST.chamberCostGrowth, s.chambers) * modifiers(s).chamberCost);
 
 /** Workers one queen makes per second from upgrades alone (no Royal Feast or spells). */
 export const workersPerQueenPerSecond = s => modifiers(s).lay / QUEEN_SECONDS_PER_WORKER;

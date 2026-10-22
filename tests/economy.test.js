@@ -136,3 +136,12 @@ test('Royal Creamery: Bug Milk +1% per queen', () => {
   s.upgrades.creamery = 1;
   assert.ok(Math.abs(game.milkPerSecond(s) - before * 1.3) < 1e-9);
 });
+
+test('Banquet Hall: Nest Chambers cost 25% less', () => {
+  const s = newGame();
+  s.chambers = 4;
+  const before = game.chamberCost(s);
+  s.upgrades.banquet = 1;
+  assert.equal(game.chamberCost(s), Math.ceil(50 * 1.25 ** 4 * 0.75));
+  assert.ok(game.chamberCost(s) < before);
+});
