@@ -74,12 +74,3 @@ and the UI turns events into notifications and re-renders.
 ## Deploying
 
 GitHub Pages serves the `main` branch as-is. Push to `main` and the site updates within a minute or two.
-
-## Design rules from playtesting
-
-- The first Nuptial Flight should come after about 30–45 minutes.
-- No random clickables floating across the screen. Burst rewards come from things the player chooses to start:
-  expeditions, the Buff Pantry and spells.
-- Features appear gradually. A new game shows only the cube and the Colony shop.
-- Queens make Worker Ants, not sugar, and there is only one kind of Worker Ant.
-- Heritage upgrades should matter for the whole run, not just give a head start.
