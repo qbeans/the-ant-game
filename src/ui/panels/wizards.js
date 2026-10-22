@@ -5,11 +5,13 @@ import {
 import { byId, percent, setText } from '../dom.js';
 import { store } from '../store.js';
 
+const cooldownLabel = seconds => (seconds < 60 ? `${seconds}s` : `${seconds / 60} min`);
+
 export function initWizards() {
   byId('spells').innerHTML = SPELLS.map(sp =>
     `<button class="btn ghost spell" data-id="${sp.id}">
       <span class="spell-head"><b>${sp.name}</b><span class="spell-cost num"></span></span>
-      <small>${sp.desc} <span class="spell-cd">${sp.cooldown / 60} min cooldown.</span></small>
+      <small>${sp.desc} <span class="spell-cd">${cooldownLabel(sp.cooldown)} cooldown.</span></small>
     </button>`).join('');
   byId('spells').addEventListener('click', e => {
     const button = e.target.closest('.spell');
