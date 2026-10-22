@@ -115,3 +115,19 @@ test('Pheromone Shortcut brings expeditions home 5 minutes sooner, and needs one
   game.tick(s, 0);
   assert.deepEqual(s.exp, {});
 });
+
+test('spells go on cooldown after casting', () => {
+  const s = newGame();
+  s.owned.wizard = 1; s.mana = 100;
+  assert.equal(game.castSpell(s, 'conjure'), true);
+  assert.equal(game.spellCooldownLeft(s, 'conjure'), 300);
+  assert.equal(game.castSpell(s, 'conjure'), false); // still recharging
+  assert.equal(s.mana, 85);
+  s.clock += 300;
+  assert.equal(game.spellCooldownLeft(s, 'conjure'), 0);
+  assert.equal(game.castSpell(s, 'conjure'), true);
+});
+
+test('every spell has a cooldown at least as long as its effect', () => {
+  for (const sp of game.SPELLS) assert.ok(sp.cooldown >= (sp.duration || 0), sp.id);
+});

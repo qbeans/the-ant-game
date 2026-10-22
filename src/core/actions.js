@@ -63,13 +63,17 @@ export function royalFeast(s) {
 /** Whether a spell has anything to act on right now (Pheromone Shortcut needs an expedition out). */
 export const spellUsable = (s, id) => !SPELL_BY_ID[id]?.needsExpedition || Object.keys(s.exp).length > 0;
 
+/** Seconds until a spell can be cast again (0 when ready). */
+export const spellCooldownLeft = (s, id) => Math.max(0, (s.cooldowns[id] || 0) - s.clock);
+
 export function castSpell(s, id) {
   const spell = SPELL_BY_ID[id];
   if (!spell || !s.owned.wizard || !spellUsable(s, id)) return false;
   const cost = spellCost(s, id);
-  if (s.mana < cost || (spell.duration && isBuffActive(s, id))) return false;
+  if (s.mana < cost || spellCooldownLeft(s, id) > 0 || (spell.duration && isBuffActive(s, id))) return false;
   s.mana -= cost;
   s.spells++;
+  s.cooldowns[id] = s.clock + spell.cooldown;
   if (id === 'conjure') {
     const sugar = SPELL_TUNING.conjureSeconds * rawSugarPerSecond(s);
     addSugar(s, sugar);

@@ -21,6 +21,7 @@ export function createState() {
     exp: {},              // expedition id -> { start, end, squad }
     pantry: Object.fromEntries(PANTRY_BUFFS.map(b => [b.id, 0])),
     buffs: {},            // timed buff or spell id -> clock time it ends
+    cooldowns: {},        // spell id -> clock time it can be cast again
     feastEnd: 0, feasts: 0,
     expDone: 0, anteaters: 0, spells: 0, backfires: 0,
     clock: 0,             // game seconds since the save was created
