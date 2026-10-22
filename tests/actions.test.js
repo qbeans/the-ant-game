@@ -131,3 +131,16 @@ test('spells go on cooldown after casting', () => {
 test('every spell has a cooldown at least as long as its effect', () => {
   for (const sp of game.SPELLS) assert.ok(sp.cooldown >= (sp.duration || 0), sp.id);
 });
+
+test('Pheromone Shortcut can never pay for itself with Kitchen Heist Mana', () => {
+  const s = newGame({ randomValue: 0.99 });
+  claimMilestones(s, 'garden', 'picnic');
+  s.heritage.scouts = 1; s.heritage.wizline = 1; s.upgrades.wand = 1; // fastest trip, cheapest spell
+  s.owned.wizard = 1; s.owned.worker = 1000; s.mana = 30;
+  game.sendExpedition(s, 'heist');
+  const before = s.mana;
+  game.castSpell(s, 'shortcut');
+  game.tick(s, 0);
+  assert.deepEqual(s.exp, {}); // the heist came home
+  assert.ok(s.mana < before, `Mana went from ${before} to ${s.mana}`);
+});

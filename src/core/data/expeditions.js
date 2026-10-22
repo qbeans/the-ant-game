@@ -15,8 +15,9 @@ export const EXPEDITIONS = [
     lootText: 'A Picnic Basket and a Honey Flood. Maybe a Popsicle Chunk.',
     rollLoot: loot => { loot.buff('basket'); loot.buff('flood'); loot.buff('popsicle', 0.6); } },
   { id: 'heist', name: 'Kitchen Heist', duration: 600, squad: 1000, risk: 0.1, hazard: 'house cat', era: 3, icon: 'i-pop',
-    lootText: 'Lots of sugar and Mana. Often a Honey Flood or a Popsicle Chunk.',
-    rollLoot: loot => { loot.sugarSeconds(1200); loot.mana(25); loot.buff('flood', 0.5); loot.buff('popsicle', 0.5); } },
+    lootText: 'Lots of sugar and a little Mana. Often a Honey Flood or a Popsicle Chunk.',
+    // Mana loot stays below Pheromone Shortcut's lowest discounted cost (12), so the spell can't refund itself.
+    rollLoot: loot => { loot.sugarSeconds(1200); loot.mana(10); loot.buff('flood', 0.5); loot.buff('popsicle', 0.5); } },
   { id: 'march', name: 'Continental March', duration: 1200, squad: 5000, risk: 0.1, hazard: 'flock of seagulls', era: 4, icon: 'i-flag',
     lootText: 'A mountain of sugar, two Picnic Baskets and a Popsicle Chunk.',
     rollLoot: loot => { loot.sugarSeconds(1800); loot.buff('basket'); loot.buff('basket'); loot.buff('popsicle'); loot.buff('rush', 0.5); } },
