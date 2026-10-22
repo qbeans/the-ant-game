@@ -71,6 +71,7 @@ h1{font:400 clamp(26px,3.4vw,38px)/1 var(--f-display);margin:0;color:var(--honey
 .hint{color:var(--ink-dim);font-size:13px;margin:0}
 .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .row.spread{justify-content:space-between}
+.stack{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
 .row.end{justify-content:flex-end}
 .gap-top{margin-top:12px}
 .section-top{margin-top:16px}
