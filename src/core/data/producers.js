@@ -29,7 +29,7 @@ export const PRODUCERS = [
   { id: 'burrow', name: 'Supercolony Megaburrow', plural: 'Supercolony Megaburrows', cost: 1.5e13, sps: 3.2e7, era: 4, icon: 'i-globe',
     desc: 'One nest, every continent. The tunnels go all the way down.' },
   { id: 'astro', name: 'Ant Astronaut Program', plural: 'Ant Astronaut Programs', cost: 2.2e14, sps: 2e8, era: 5, dust: 0.05, icon: 'i-rocket',
-    desc: 'Six-legged spacesuits and one-way tickets. Brings home sugar and Stardust.' },
+    desc: 'Ants in six-legged spacesuits fly out to the stars and bring home sugar and Stardust.' },
   { id: 'lunar', name: 'Lunar Sugar Mine', plural: 'Lunar Sugar Mines', cost: 3.3e15, sps: 1.3e9, era: 5, dust: 0.3, icon: 'i-moon',
     desc: 'The Moon is mostly sugar if you dig in the right place. Comes up dusty.' },
   { id: 'dyson', name: 'Dyson Swarm', plural: 'Dyson Swarms', cost: 5e16, sps: 8.5e9, era: 5, icon: 'i-sun',
