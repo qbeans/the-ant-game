@@ -1,9 +1,9 @@
 # The Ant Game
 
+## [▶ Play The Ant Game](https://qbeans.github.io/the-ant-game/)
+
 An ant-colony idle game in the style of Cookie Clicker. Click the sugar cube, raise queens, milk ladybugs,
 brew Mana with Ant Wizards, and grow from one anthill to the Andromeda Galaxy across Nuptial Flight (prestige) runs.
-
-**Play it:** https://qbeans.github.io/the-ant-game/
 
 Plain HTML, CSS and JavaScript modules. No build step and no dependencies.
 
