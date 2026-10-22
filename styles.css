@@ -182,12 +182,13 @@ canvas#colony{width:100%;height:300px;display:block;border-radius:12px;backgroun
 .upg:not(:disabled) .uc{background:var(--honey);color:#2a1a06;font-weight:600;padding:2px 8px;border-radius:99px}
 .upg:not(:disabled) .uc.m{background:var(--milk);color:#1b2530}
 .upg:not(:disabled) .uc.d{background:#cbbcff;color:#1f1733}
-.spells{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;margin-top:12px}
-.btn.spell{flex-direction:column;align-items:flex-start;text-align:left;gap:2px;padding:8px 12px}
+/* Buttons at least 240px wide, so a spell's name and its "Ready in 9:51" tag fit side by side. */
+.spells{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;margin-top:12px}
+.btn.spell{flex-direction:column;align-items:flex-start;text-align:left;gap:2px;padding:8px 12px;min-width:0}
 .btn.spell small{white-space:normal;line-height:1.3}
 .btn.spell b{font-weight:600}
 /* The Mana price, styled like the shop's price tags. */
-.spell-head{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%}
+.spell-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 8px;width:100%}
 .spell-cost{flex:none;font:600 12px var(--f-mono);padding:2px 8px;border-radius:99px;background:#9d8cf0;color:#1f1733}
 .btn.spell:disabled .spell-cost{background:transparent;color:#b9a6ff;border:1px solid #5d4f8f;padding:1px 7px}
 .btn.spell .spell-cost.active{background:#33285a;color:#ddd3ff;border:0;padding:2px 8px}
