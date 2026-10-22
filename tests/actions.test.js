@@ -145,3 +145,11 @@ test('Pheromone Shortcut can never pay for itself with Kitchen Heist Mana', () =
   assert.deepEqual(s.exp, {}); // the heist came home
   assert.ok(s.mana < before, `Mana went from ${before} to ${s.mana}`);
 });
+
+test('Summon Popsicle puts a Popsicle Chunk in the Pantry', () => {
+  const s = newGame();
+  s.owned.wizard = 1; s.mana = 35;
+  assert.equal(game.castSpell(s, 'summon'), true);
+  assert.equal(s.pantry.popsicle, 1);
+  assert.equal(s.pantry.basket, 0);
+});

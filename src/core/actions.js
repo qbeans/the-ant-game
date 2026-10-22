@@ -83,8 +83,8 @@ export function castSpell(s, id) {
     for (const run of trips) run.end = Math.max(s.clock, run.end - SPELL_TUNING.shortcutSeconds);
     emit({ kind: 'spell', text: `${trips.length === 1 ? 'Your expedition is' : `All ${trips.length} expeditions are`} <b>5 minutes</b> closer to home.` });
   } else if (id === 'summon') {
-    s.pantry.basket++;
-    emit({ kind: 'spell', text: 'A <b>Picnic Basket</b> appeared in the Pantry.' });
+    s.pantry.popsicle++;
+    emit({ kind: 'spell', text: 'A <b>Popsicle Chunk</b> appeared in the Pantry.' });
   } else if (id === 'hex' && random() < SPELL_TUNING.hexBackfireChance) {
     const burned = s.sugar * SPELL_TUNING.hexBurnFraction;
     s.sugar -= burned;
