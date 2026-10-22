@@ -38,10 +38,16 @@ function perUnitMultiplier(s, list) {
   return mult;
 }
 
+/** World Dairy Cartel: a sugar bonus that grows with Bug Milk production (as a fraction, e.g. 0.21 = +21%). */
+export const milkSugarBonus = s => {
+  const rate = modifiers(s).sugarPerMilk;
+  return rate ? rate * milkPerSecond(s) : 0;
+};
+
 export function baseMultiplier(s) {
   const mods = modifiers(s);
   return (1 + pheromoneBonus(s)) * (1 + JELLY.bonusPerUnspent * s.jelly) * milestoneMultiplier(s) * mods.sugar
-    * perUnitMultiplier(s, mods.sugarPerUnit);
+    * perUnitMultiplier(s, mods.sugarPerUnit) * (1 + milkSugarBonus(s));
 }
 
 export const buffSugarMultiplier = s => activeBuffMultiplier(s, 'sugarMultiplier');

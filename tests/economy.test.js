@@ -145,3 +145,14 @@ test('Banquet Hall: Nest Chambers cost 25% less', () => {
   assert.equal(game.chamberCost(s), Math.ceil(50 * 1.25 ** 4 * 0.75));
   assert.ok(game.chamberCost(s) < before);
 });
+
+test('World Dairy Cartel: triple milk, and +1% sugar/s per 10 Bug Milk/s', () => {
+  const s = newGame();
+  claimMilestones(s, 'garden', 'picnic', 'market');
+  s.owned.worker = 100; s.owned.ladybug = 100; // 12 milk/s before the Cartel
+  const sugarBefore = game.rawSugarPerSecond(s), milkBefore = game.milkPerSecond(s);
+  s.upgrades.cartel = 1;
+  assert.ok(Math.abs(game.milkPerSecond(s) - milkBefore * 3) < 1e-9);
+  assert.ok(Math.abs(game.milkSugarBonus(s) - 0.036) < 1e-9); // 36 milk/s -> +3.6%
+  assert.ok(Math.abs(game.rawSugarPerSecond(s) - sugarBefore * 1.036) < 1e-6);
+});

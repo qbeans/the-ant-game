@@ -98,8 +98,9 @@ const milkUpgrades = [
     unlock: s => s.spells >= 3, effects: [{ type: 'spellCostMultiplier', mult: 0.75 }] },
   { id: 'grimoire', name: 'The Grand Grimoire', cost: 25000, desc: 'Mana holds twice as much.',
     unlock: s => s.owned.wizard >= 10, effects: [{ type: 'manaCapMultiplier', mult: 2 }] },
-  { id: 'cartel', name: 'World Dairy Cartel', cost: 60000, desc: 'Triple Bug Milk production.',
-    unlock: s => era(s) >= 4, effects: [{ type: 'milkMultiplier', mult: 3 }] },
+  { id: 'cartel', name: 'World Dairy Cartel', cost: 60000,
+    desc: 'Triple Bug Milk production, and all sugar/s +1% for every 10 Bug Milk/s.',
+    unlock: s => era(s) >= 4, effects: [{ type: 'milkMultiplier', mult: 3 }, { type: 'sugarPerMilk', bonusPerMilkPerSecond: 0.001 }] },
 ].map(u => ({ ...u, cur: 'milk' }));
 
 const synergyUpgrades = [

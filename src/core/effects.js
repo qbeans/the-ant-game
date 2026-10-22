@@ -30,6 +30,7 @@ function emptyModifiers() {
     sugar: 1,              // all sugar/s
     sugarPerUnit: [],      // { source, perUnit }: all sugar/s +perUnit per owned source
     milkPerUnit: [],       // { source, perUnit }: all Bug Milk +perUnit per owned source
+    sugarPerMilk: 0,       // all sugar/s +this much per 1 Bug Milk/s
     click: 1, clickShareOfSps: 0,
     lay: 1, room: 1,
     milk: 1, producerMilk: {},
@@ -50,6 +51,7 @@ function apply(m, effect) {
     case 'sugarMultiplier': m.sugar *= effect.mult; break;
     case 'sugarPerUnit': m.sugarPerUnit.push(effect); break;
     case 'milkPerUnit': m.milkPerUnit.push(effect); break;
+    case 'sugarPerMilk': m.sugarPerMilk += effect.bonusPerMilkPerSecond; break;
     case 'clickMultiplier': m.click *= effect.mult; break;
     case 'clickShareOfSps': m.clickShareOfSps += effect.share; break;
     case 'layMultiplier': m.lay *= effect.mult; break;
