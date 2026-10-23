@@ -22,7 +22,7 @@ const REVEALS = [
   { key: 'milk', el: 'stMilk', test: s => s.milkAll > 0,
     msg: 'Your aphids make <b>Bug Milk</b>. Some upgrades cost milk.' },
   { key: 'feast', el: 'feastBtn', panel: 'p-nest', test: s => s.milkAll > 0 && s.owned.queen >= 1,
-    msg: '<b>Royal Feast</b>: spend milk so queens make workers faster.' },
+    msg: '<b>Royal Feast</b>: spend milk so queens produce workers faster.' },
   { key: 'pantry', el: 'pantryCard', panel: 'p-nest', test: s => Object.values(s.pantry).some(n => n > 0),
     msg: 'Loot goes to the <b>Buff Pantry</b>. Use it whenever you like.' },
   { key: 'wizards', el: 'wizCard', panel: 'p-nest', test: s => s.owned.wizard >= 1,

@@ -4,7 +4,7 @@
  * plus a few that only matter at the start of a run or while away.
  */
 export const HERITAGE = [
-  { id: 'lineage', name: 'Royal Lineage', cost: 1, desc: 'Queens make workers twice as fast, and every run starts with 5 Ant Queens.',
+  { id: 'lineage', name: 'Royal Lineage', cost: 1, desc: 'Queens produce workers twice as fast, and every run starts with 5 Ant Queens.',
     effects: [{ type: 'layMultiplier', mult: 2 }, { type: 'startingQueens', count: 5 }] },
   { id: 'deep', name: 'Deep Chambers', cost: 1, desc: 'Every Nest Chamber holds twice as many workers.',
     effects: [{ type: 'roomMultiplier', mult: 2 }] },

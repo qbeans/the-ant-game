@@ -30,8 +30,8 @@ const TIER_NAMES = {
 
 // Queens make no sugar, so their five upgrades each do something different instead of a plain ×2.
 const QUEEN_TIERS = [
-  { desc: 'Ant Queens make workers twice as fast.', effects: [{ type: 'layMultiplier', mult: 2 }] },
-  { desc: 'Ant Queens make workers twice as fast.', effects: [{ type: 'layMultiplier', mult: 2 }] },
+  { desc: 'Ant Queens produce workers twice as fast.', effects: [{ type: 'layMultiplier', mult: 2 }] },
+  { desc: 'Ant Queens produce workers twice as fast.', effects: [{ type: 'layMultiplier', mult: 2 }] },
   { desc: 'Worker Ants make +1% sugar per Ant Queen.', effects: [{ type: 'synergy', producer: 'worker', source: 'queen', perUnit: 0.01 }] },
   { desc: 'Royal Feast lasts twice as long and costs half.',
     effects: [{ type: 'feastDurationMultiplier', mult: 2 }, { type: 'feastCostMultiplier', mult: 0.5 }] },
@@ -70,7 +70,7 @@ const clickUpgrades = [
 
 // A full first run earns roughly 3,000-6,000 Bug Milk, so not all of these fit in run one.
 const milkUpgrades = [
-  { id: 'diet', name: 'Royal Jelly Diet', cost: 20, desc: 'Queens make workers twice as fast.',
+  { id: 'diet', name: 'Royal Jelly Diet', cost: 20, desc: 'Queens produce workers twice as fast.',
     unlock: s => s.owned.aphid >= 1 && s.owned.queen >= 3, effects: [{ type: 'layMultiplier', mult: 2 }] },
   { id: 'nanny', name: 'Expanded Galleries', cost: 40, desc: 'The nest holds 50% more workers.',
     unlock: s => s.milkAll >= 15, effects: [{ type: 'roomMultiplier', mult: 1.5 }] },
