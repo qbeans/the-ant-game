@@ -153,3 +153,11 @@ test('Summon Popsicle puts a Popsicle Chunk in the Pantry', () => {
   assert.equal(s.pantry.popsicle, 1);
   assert.equal(s.pantry.basket, 0);
 });
+
+test('The Grand Grimoire halves spell cooldowns, but never below the spell\'s own effect', () => {
+  const s = newGame();
+  s.owned.wizard = 1; s.mana = 200; s.upgrades.grimoire = 1;
+  game.castSpell(s, 'conjure');
+  assert.equal(game.spellCooldownLeft(s, 'conjure'), game.SPELL_BY_ID.conjure.cooldown / 2);
+  for (const sp of game.SPELLS) assert.ok(game.spellCooldown(s, sp.id) >= (sp.duration || 0), sp.id);
+});

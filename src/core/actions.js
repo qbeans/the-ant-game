@@ -13,7 +13,7 @@ import { addDust, addMilk, addSugar } from './resources.js';
 import { isBuffActive, isFeastActive, workersHome } from './queries.js';
 import {
   chamberCost, clickValue, dustPerSecond, expeditionAvailable, expeditionDuration, expeditionRisk, feastCost,
-  feastDuration, manaCap, milkPerSecond, producerCost, producerUnlocked, rawSugarPerSecond, spellCost, sugarPerSecond,
+  feastDuration, manaCap, milkPerSecond, producerCost, producerUnlocked, rawSugarPerSecond, spellCooldown, spellCost, sugarPerSecond,
 } from './economy.js';
 import { EXPEDITION_LOSS_FRACTION, POPSICLE_SECONDS, SPELL_TUNING } from './constants.js';
 
@@ -73,7 +73,7 @@ export function castSpell(s, id) {
   if (s.mana < cost || spellCooldownLeft(s, id) > 0 || (spell.duration && isBuffActive(s, id))) return false;
   s.mana -= cost;
   s.spells++;
-  s.cooldowns[id] = s.clock + spell.cooldown;
+  s.cooldowns[id] = s.clock + spellCooldown(s, id);
   if (id === 'conjure') {
     const sugar = SPELL_TUNING.conjureSeconds * rawSugarPerSecond(s);
     addSugar(s, sugar);

@@ -1,17 +1,17 @@
 import {
-  MANA, SPELLS, SPELL_BY_ID, castSpell, formatNumber as fmt, formatTime, isBuffActive, manaCap, manaPerSecond, spellCooldownLeft,
+  MANA, SPELLS, SPELL_BY_ID, castSpell, formatNumber as fmt, formatTime, isBuffActive, manaCap, manaPerSecond, spellCooldown, spellCooldownLeft,
   spellCost, spellUsable,
 } from '../../core/index.js';
 import { byId, percent, setText } from '../dom.js';
 import { store } from '../store.js';
 
-const cooldownLabel = seconds => (seconds < 60 ? `${seconds}s` : `${seconds / 60} min`);
+const cooldownLabel = seconds => (seconds < 60 ? `${Math.round(seconds)}s` : `${+(seconds / 60).toFixed(1)} min`);
 
 export function initWizards() {
   byId('spells').innerHTML = SPELLS.map(sp =>
     `<button class="btn ghost spell" data-id="${sp.id}">
       <span class="spell-head"><b>${sp.name}</b><span class="spell-cost num"></span></span>
-      <small>${sp.desc} <span class="spell-cd">${cooldownLabel(sp.cooldown)} cooldown.</span></small>
+      <small>${sp.desc} <span class="spell-cd"></span></small>
     </button>`).join('');
   byId('spells').addEventListener('click', e => {
     const button = e.target.closest('.spell');
@@ -37,6 +37,7 @@ export function renderWizards(s) {
     const spell = SPELL_BY_ID[button.dataset.id], cost = spellCost(s, spell.id);
     const active = spell.duration && isBuffActive(s, spell.id), recharging = !active && spellCooldownLeft(s, spell.id) > 0;
     const price = button.querySelector('.spell-cost');
+    setText(button.querySelector('.spell-cd'), `${cooldownLabel(spellCooldown(s, spell.id))} cooldown.`);
     // The tag shows, in order: time left while active, time until ready while recharging, otherwise the Mana price.
     setText(price, active ? `Active ${formatTime(s.buffs[spell.id] - s.clock)}`
       : recharging ? `Ready in ${formatTime(spellCooldownLeft(s, spell.id))}` : `${cost} Mana`);

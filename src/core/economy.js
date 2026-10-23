@@ -107,6 +107,9 @@ export const manaCap = s => (MANA.baseCap + MANA.capPerTower * s.owned.wizard) *
 export const manaPerSecond = s => s.owned.wizard * MANA.ratePerTower * modifiers(s).manaRate;
 export const spellCost = (s, id) => Math.ceil(SPELL_BY_ID[id].cost * modifiers(s).spellCost);
 
+/** Seconds a spell takes to recharge after casting, after upgrades. Never shorter than the spell's own effect. */
+export const spellCooldown = (s, id) => Math.max(SPELL_BY_ID[id].duration || 0, SPELL_BY_ID[id].cooldown * modifiers(s).spellCooldown);
+
 // ---- Nest ----
 
 export const nestRoom = s => Math.floor((NEST.baseRoom + NEST.roomPerChamber * s.chambers) * modifiers(s).room);

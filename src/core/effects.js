@@ -38,7 +38,7 @@ function emptyModifiers() {
     feastDuration: 1, feastCost: 1, chamberCost: 1, chamberGrowth: null,
     loot: 1, expeditionTime: 1, riskCap: Infinity, expeditionBonusBuffs: [],
     pheromone: 1,
-    manaRate: 1, manaCap: 1, spellCost: 1,
+    manaRate: 1, manaCap: 1, spellCost: 1, spellCooldown: 1,
     startingQueens: 0, startingMilestones: [],
     offline: { rate: OFFLINE.rate, maxSeconds: OFFLINE.maxSeconds },
   };
@@ -71,6 +71,7 @@ function apply(m, effect) {
     case 'pheromoneMultiplier': m.pheromone *= effect.mult; break;
     case 'manaRateMultiplier': m.manaRate *= effect.mult; break;
     case 'manaCapMultiplier': m.manaCap *= effect.mult; break;
+    case 'spellCooldownMultiplier': m.spellCooldown *= effect.mult; break;
     case 'spellCostMultiplier': m.spellCost *= effect.mult; break;
     case 'startingQueens': m.startingQueens = Math.max(m.startingQueens, effect.count); break;
     case 'startingMilestone': m.startingMilestones.push(effect.milestone); break;
