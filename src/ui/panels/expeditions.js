@@ -22,7 +22,8 @@ export function initExpeditions() {
 
 export function renderExpeditions(s) {
   const home = workersHome(s), away = awayCount(s);
-  setText(byId('expHome'), `${fmt(home + s.owned.queen)} ants at home` + (away ? ` · ${fmt(away)} on expedition` : ''));
+  // Only Worker Ants who aren't already out can join a squad, so count exactly those (queens never go).
+  setText(byId('expHome'), `${fmt(home)} Worker Ants free to send` + (away ? ` · ${fmt(away)} out on expeditions` : ''));
   for (const e of EXPEDITIONS) {
     const row = byId('ex-' + e.id);
     row.hidden = !expeditionAvailable(s, e);
