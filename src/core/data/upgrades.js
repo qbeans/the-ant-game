@@ -72,7 +72,7 @@ const clickUpgrades = [
 const milkUpgrades = [
   { id: 'diet', name: 'Royal Jelly Diet', cost: 20, desc: 'Queens make workers twice as fast.',
     unlock: s => s.owned.aphid >= 1 && s.owned.queen >= 3, effects: [{ type: 'layMultiplier', mult: 2 }] },
-  { id: 'nanny', name: 'Nanny Ants', cost: 40, desc: 'The nest holds 50% more workers.',
+  { id: 'nanny', name: 'Expanded Galleries', cost: 40, desc: 'The nest holds 50% more workers.',
     unlock: s => s.milkAll >= 15, effects: [{ type: 'roomMultiplier', mult: 1.5 }] },
   { id: 'banquet', name: 'Banquet Hall', cost: 80, desc: 'Nest Chambers cost 25% less to dig.',
     unlock: s => s.chambers >= 3, effects: [{ type: 'chamberCostMultiplier', mult: 0.75 }] },
@@ -135,6 +135,9 @@ const otherSugarUpgrades = [
     unlock: s => achievementCount(s) >= 16, effects: [{ type: 'pheromoneMultiplier', mult: 1.5 }] },
   { id: 'phero2', name: 'Pheromone Broadcast Towers', cost: 1e11, desc: 'Each achievement adds 50% more again.',
     unlock: s => achievementCount(s) >= 30, effects: [{ type: 'pheromoneMultiplier', mult: 1.5 }] },
+  { id: 'pocket', name: 'Pocket Dimension Chambers', cost: 1e22,
+    desc: 'Each Nest Chamber costs only 5% more than the last, instead of 25%.',
+    unlock: s => era(s) >= 6, effects: [{ type: 'chamberCostGrowth', growth: 1.05 }] },
   { id: 'scoutTrain', name: 'Scout Training', cost: 15000, desc: 'Expeditions finish 20% faster.',
     unlock: s => s.expDone >= 2, effects: [{ type: 'expeditionTimeMultiplier', mult: 0.8 }] },
 ].map(u => ({ ...u, cur: 'sugar' }));
@@ -157,6 +160,7 @@ const stardustUpgrades = [
     unlock: s => s.dustAll >= 60000, effects: [{ type: 'sugarMultiplier', mult: 3 }] },
   { id: 'warp', name: 'Warp Pheromones', cost: 500000, desc: 'Wormholes, Hatcheries and Multiverse Anthills produce ×3.',
     unlock: s => era(s) >= 6, effects: [producerMult(['wormhole', 'chrono', 'multiverse'], 3)] },
+
 ].map(u => ({ ...u, cur: 'dust' }));
 
 export const UPGRADES = [

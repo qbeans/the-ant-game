@@ -156,3 +156,12 @@ test('World Dairy Cartel: triple milk, and +1% sugar/s per 10 Bug Milk/s', () =>
   assert.ok(Math.abs(game.milkSugarBonus(s) - 0.036) < 1e-9); // 36 milk/s -> +3.6%
   assert.ok(Math.abs(game.rawSugarPerSecond(s) - sugarBefore * 1.036) < 1e-6);
 });
+
+test('Pocket Dimension Chambers: chamber prices grow 5% each instead of 25%', () => {
+  const s = newGame();
+  s.chambers = 200;
+  const before = game.chamberCost(s);
+  s.upgrades.pocket = 1;
+  assert.equal(game.chamberCost(s), Math.ceil(50 * 1.05 ** 200));
+  assert.ok(game.chamberCost(s) < before / 1e10);
+});

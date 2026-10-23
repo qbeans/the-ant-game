@@ -35,7 +35,7 @@ function emptyModifiers() {
     lay: 1, room: 1,
     milk: 1, producerMilk: {},
     dust: 1, producerDust: {},
-    feastDuration: 1, feastCost: 1, chamberCost: 1,
+    feastDuration: 1, feastCost: 1, chamberCost: 1, chamberGrowth: null,
     loot: 1, expeditionTime: 1, riskCap: Infinity, expeditionBonusBuffs: [],
     pheromone: 1,
     manaRate: 1, manaCap: 1, spellCost: 1,
@@ -63,6 +63,7 @@ function apply(m, effect) {
     case 'feastDurationMultiplier': m.feastDuration *= effect.mult; break;
     case 'feastCostMultiplier': m.feastCost *= effect.mult; break;
     case 'chamberCostMultiplier': m.chamberCost *= effect.mult; break;
+    case 'chamberCostGrowth': m.chamberGrowth = Math.min(m.chamberGrowth ?? Infinity, effect.growth); break;
     case 'lootMultiplier': m.loot *= effect.mult; break;
     case 'expeditionTimeMultiplier': m.expeditionTime *= effect.mult; break;
     case 'riskCap': m.riskCap = Math.min(m.riskCap, effect.max); break;
