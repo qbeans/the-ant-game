@@ -12,7 +12,6 @@ export function initExpeditions() {
       <div><div class="t">${e.name}</div><div class="loot">${e.lootText}</div></div>
       <div class="act"><button class="btn" data-id="${e.id}">Send</button></div>
       <div class="meta num"><span class="md"></span>${e.risk ? ' · <span class="risk"></span>: lose 25% of squad' : ''}</div>
-      <div class="prog" hidden><div class="bar"><i></i></div><span></span></div>
     </div>`).join('');
   byId('exps').addEventListener('click', e => {
     const button = e.target.closest('.btn');
@@ -31,12 +30,14 @@ export function renderExpeditions(s) {
     setText(row.querySelector('.md'), `${e.squad} ants · ${formatTime(expeditionDuration(s, e))}`);
     if (e.risk) setText(row.querySelector('.risk'), `${Math.round(expeditionRisk(s, e) * 100)}% ${e.hazard} risk`);
 
-    const run = s.exp[e.id], button = row.querySelector('.btn'), progress = row.querySelector('.prog');
-    progress.hidden = !run;
-    button.hidden = !!run;
+    // While a squad is out, the button itself becomes the countdown and fills up as they head home,
+    // so the row keeps exactly the same size.
+    const run = s.exp[e.id], button = row.querySelector('.btn');
+    button.classList.toggle('running', !!run);
     if (run) {
-      progress.querySelector('i').style.width = percent(s.clock - run.start, run.end - run.start);
-      setText(progress.querySelector('span'), formatTime(run.end - s.clock));
+      button.disabled = true;
+      button.style.setProperty('--pct', percent(s.clock - run.start, run.end - run.start));
+      setText(button, formatTime(run.end - s.clock));
     } else {
       button.disabled = home < e.squad;
       setText(button, home < e.squad ? `Need ${e.squad}` : 'Send');
