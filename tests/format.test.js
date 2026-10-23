@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { formatNumber, formatTime } from '../src/core/index.js';
+import { formatNumber, formatRate, formatTime } from '../src/core/index.js';
 
 test('formatNumber uses commas below 1,000 and suffixes above', () => {
   assert.equal(formatNumber(0), '0');
@@ -32,4 +32,15 @@ test('formatTime shows m:ss, then hours and minutes', () => {
   assert.equal(formatTime(65), '1:05');
   assert.equal(formatTime(3725), '1h 02m');
   assert.equal(formatTime(-5), '0:00');
+});
+
+test('formatRate shows one decimal, more only when a value would round to zero', () => {
+  assert.equal(formatRate(33.333e6), '33.3M');
+  assert.equal(formatRate(4.93), '4.9');
+  assert.equal(formatRate(0.1), '0.1');
+  assert.equal(formatRate(0.02), '0.02');   // e.g. one Aphid Ranch's milk
+  assert.equal(formatRate(0.004), '0.004');
+  assert.equal(formatRate(999.96), '1.0K');
+  assert.equal(formatRate(1234.5), '1.2K');
+  assert.equal(formatRate(0), '0');
 });

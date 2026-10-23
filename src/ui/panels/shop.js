@@ -1,7 +1,7 @@
 // The Colony shop (producers) and the Upgrades list.
 
 import {
-  CURRENCY_LABEL, PRODUCERS, UPGRADES, UPGRADE_BY_ID, awayCount, buyProducer, buyUpgrade, formatNumber as fmt,
+  CURRENCY_LABEL, PRODUCERS, UPGRADES, UPGRADE_BY_ID, awayCount, buyProducer, buyUpgrade, formatNumber as fmt, formatRate,
   manaPerSecond, maxAffordable, nestRoom, nextMilestone, producerCost, producerSugarPerSecond, producerUnlocked,
   unitDustPerSecond, unitMilkPerSecond, unitSugarPerSecond, upgradeAvailable, workersPerQueenPerSecond,
 } from '../../core/index.js';
@@ -61,14 +61,14 @@ function statLines(s, p) {
     const roomLine = s.owned.worker >= room
       ? `Nest full: ${fmt(s.owned.worker)} / ${fmt(room)} workers`
       : `Nest room: ${fmt(s.owned.worker)} / ${fmt(room)} workers`;
-    return `Each: ${fmt(each, 1)} workers/min` + (owned ? `\nAll ${fmt(owned)}: ${fmt(each * owned, 1)} workers/min` : '') + `\n${roomLine}`;
+    return `Each: ${formatRate(each)} workers/min` + (owned ? `\nAll ${fmt(owned)}: ${formatRate(each * owned)} workers/min` : '') + `\n${roomLine}`;
   }
   const manaEach = p.mana ? manaPerSecond(s) / Math.max(1, s.owned.wizard) || p.mana : 0;
   const describe = (sugar, units) => [
-    `${fmt(sugar, sugar < 10 ? 2 : 1)} sugar/s`,
-    p.milk && `${fmt(unitMilkPerSecond(s, p.id) * units, 2)} milk/s`,
-    p.dust && `${fmt(unitDustPerSecond(s, p.id) * units, 2)} stardust/s`,
-    p.mana && `${fmt(manaEach * units, 2)} Mana/s`,
+    `${formatRate(sugar)} sugar/s`,
+    p.milk && `${formatRate(unitMilkPerSecond(s, p.id) * units)} milk/s`,
+    p.dust && `${formatRate(unitDustPerSecond(s, p.id) * units)} stardust/s`,
+    p.mana && `${formatRate(manaEach * units)} Mana/s`,
   ].filter(Boolean).join(' + ');
   const away = p.id === 'worker' ? awayCount(s) : 0;
   let text = `Each: ${describe(unitSugarPerSecond(s, p.id), 1)}`;

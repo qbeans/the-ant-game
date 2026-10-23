@@ -14,6 +14,25 @@ export function formatNumber(n, decimals = 0) {
   return String(+value.toFixed(digits)) + SUFFIXES[tier];
 }
 
+/**
+ * Formats a production rate with one decimal place: 0.1, 4.9, 999.5, 33.3M.
+ * Values too small to show at one decimal get more: 0.02 (two), 0.004 (three).
+ */
+export function formatRate(n) {
+  if (!isFinite(n)) return '∞';
+  if (n === 0) return '0';
+  if (n < 1000) {
+    const decimals = n >= 0.05 ? 1 : n >= 0.005 ? 2 : 3;
+    const text = n.toFixed(decimals);
+    return text === '1000.0' ? '1.0K' : text;
+  }
+  let tier = Math.floor(Math.log10(n) / 3);
+  let value = n / Math.pow(10, 3 * tier);
+  if (value >= 999.95) { tier++; value /= 1000; } // avoid "1000.0K" from rounding
+  if (tier >= SUFFIXES.length) return n.toExponential(1);
+  return value.toFixed(1) + SUFFIXES[tier];
+}
+
 /** Formats seconds as m:ss, or as "1h 05m" past an hour. */
 export function formatTime(seconds) {
   const total = Math.max(0, Math.ceil(seconds));
