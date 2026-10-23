@@ -34,7 +34,7 @@ button:focus-visible{outline:2px solid var(--honey);outline-offset:2px}
 
 /* Top: title + news */
 .top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;padding:18px 0 10px}
-.brand{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 h1{font:400 clamp(26px,3.4vw,38px)/1 var(--f-display);margin:0;color:var(--honey);letter-spacing:.01em;text-wrap:balance}
 .era{font:500 12px/1 var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--ink-dim);border:1px solid var(--line);border-radius:99px;padding:6px 10px}
 /* One line, always. Headlines drift across from right to left (see src/ui/news.js). */
