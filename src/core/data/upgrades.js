@@ -96,8 +96,9 @@ const milkUpgrades = [
     unlock: s => s.owned.wizard >= 1, effects: [{ type: 'manaRateMultiplier', mult: 2 }] },
   { id: 'wand', name: 'Wand Polish', cost: 8000, desc: 'Spells cost 25% less Mana.',
     unlock: s => s.spells >= 3, effects: [{ type: 'spellCostMultiplier', mult: 0.75 }] },
+  // Appears once you've invested in wizards and actually been casting, when cooldowns start to bite.
   { id: 'grimoire', name: 'The Grand Grimoire', cost: 25000, desc: 'Spell cooldowns are half as long.',
-    unlock: s => s.owned.wizard >= 10, effects: [{ type: 'spellCooldownMultiplier', mult: 0.5 }] },
+    unlock: s => s.owned.wizard >= 25 && s.spells >= 25, effects: [{ type: 'spellCooldownMultiplier', mult: 0.5 }] },
   { id: 'cartel', name: 'World Dairy Cartel', cost: 60000,
     desc: 'Triple Bug Milk production, and all sugar/s +1% for every 10 Bug Milk/s.',
     unlock: s => era(s) >= 4, effects: [{ type: 'milkMultiplier', mult: 3 }, { type: 'sugarPerMilk', bonusPerMilkPerSecond: 0.001 }] },

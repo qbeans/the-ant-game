@@ -161,3 +161,14 @@ test('The Grand Grimoire halves spell cooldowns, but never below the spell\'s ow
   assert.equal(game.spellCooldownLeft(s, 'conjure'), game.SPELL_BY_ID.conjure.cooldown / 2);
   for (const sp of game.SPELLS) assert.ok(game.spellCooldown(s, sp.id) >= (sp.duration || 0), sp.id);
 });
+
+test('The Grand Grimoire appears after 25 Wizard Towers and 25 spells cast', () => {
+  const s = newGame();
+  const grimoire = game.UPGRADE_BY_ID.grimoire;
+  s.owned.wizard = 25; s.spells = 24;
+  assert.equal(game.upgradeAvailable(s, grimoire), false);
+  s.spells = 25; s.owned.wizard = 24;
+  assert.equal(game.upgradeAvailable(s, grimoire), false);
+  s.owned.wizard = 25;
+  assert.equal(game.upgradeAvailable(s, grimoire), true);
+});
