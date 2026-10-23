@@ -207,6 +207,9 @@ canvas#colony{width:100%;height:300px;display:block;border-radius:12px;backgroun
 .flight .eyebrow{font:500 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:#cbbcff}
 .flight .btn{background:#cbbcff;border-color:#8f7fc4;color:#1f1733}
 .flight .btn:disabled{background:var(--panel-3);border-color:var(--line);color:var(--ink-faint)}
+/* A brief glow to point the player at a card (used when the Nuptial Flight first unlocks). */
+.spotlight{animation:spotlight 2.4s ease-out}
+@keyframes spotlight{0%,40%{box-shadow:0 0 0 4px #cbbcff,0 0 28px rgba(203,188,255,.6)}100%{box-shadow:0 0 0 0 transparent}}
 .jelly{font:700 28px var(--f-ui);color:#e9e0ff;font-variant-numeric:tabular-nums}
 .herit{display:flex;flex-direction:column;gap:6px;margin-top:10px}
 .herit .upg .uc{color:#cbbcff}
@@ -264,4 +267,4 @@ details[open] summary h2::after{content:" −"}
   canvas#colony{height:240px}
 }
 @media (max-width:420px){.nestgrid{grid-template-columns:1fr}}
-@media (prefers-reduced-motion:reduce){.ticker-window{text-overflow:ellipsis}.ticker-text{display:inline}.reveal{animation:none}.pop{animation:none;opacity:0}.cube,.toast{transition:none;animation:none}}
+@media (prefers-reduced-motion:reduce){.spotlight{animation:none;outline:3px solid #cbbcff}.ticker-window{text-overflow:ellipsis}.ticker-text{display:inline}.reveal{animation:none}.pop{animation:none;opacity:0}.cube,.toast{transition:none;animation:none}}
