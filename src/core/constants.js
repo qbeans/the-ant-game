@@ -29,7 +29,7 @@ export const JELLY = {
 
 export const MANA = { baseCap: 30, capPerTower: 2, ratePerTower: 0.05, milkPerMana: 4 };
 
-export const SPELL_TUNING = { conjureSeconds: 600, shortcutSeconds: 300, hexBackfireChance: 0.05, hexBurnFraction: 0.1 };
+export const SPELL_TUNING = { conjureSeconds: 600, shortcutSeconds: 300, hexBackfireChance: 1 / 15, hexBurnFraction: 0.1 };
 
 export const POPSICLE_SECONDS = 900;
 
