@@ -2,7 +2,7 @@
 
 import {
   CURRENCY_LABEL, PRODUCERS, UPGRADES, UPGRADE_BY_ID, awayCount, buyProducer, buyUpgrade, formatNumber as fmt,
-  manaPerSecond, maxAffordable, nextMilestone, producerCost, producerSugarPerSecond, producerUnlocked,
+  manaPerSecond, maxAffordable, nestRoom, nextMilestone, producerCost, producerSugarPerSecond, producerUnlocked,
   unitDustPerSecond, unitMilkPerSecond, unitSugarPerSecond, upgradeAvailable, workersPerQueenPerSecond,
 } from '../../core/index.js';
 import { byId, icon, percent, setHtml, setText } from '../dom.js';
@@ -56,8 +56,12 @@ function isRevealed(s, p, index) {
 function statLines(s, p) {
   const owned = s.owned[p.id];
   if (p.id === 'queen') {
-    const each = workersPerQueenPerSecond(s) * 60;
-    return `Each: ${fmt(each, 1)} workers/min` + (owned ? `\nAll ${fmt(owned)}: ${fmt(each * owned, 1)} workers/min` : '');
+    const each = workersPerQueenPerSecond(s) * 60, room = nestRoom(s);
+    // Show the nest limit here too, so the first queen can be judged before The Nest card appears.
+    const roomLine = s.owned.worker >= room
+      ? `Nest full: ${fmt(s.owned.worker)} / ${fmt(room)} workers`
+      : `Nest room: ${fmt(s.owned.worker)} / ${fmt(room)} workers`;
+    return `Each: ${fmt(each, 1)} workers/min` + (owned ? `\nAll ${fmt(owned)}: ${fmt(each * owned, 1)} workers/min` : '') + `\n${roomLine}`;
   }
   const manaEach = p.mana ? manaPerSecond(s) / Math.max(1, s.owned.wizard) || p.mana : 0;
   const describe = (sugar, units) => [
