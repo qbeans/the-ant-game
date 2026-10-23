@@ -129,7 +129,7 @@ const synergyUpgrades = [
 ].map(u => ({ ...u, cur: 'sugar' }));
 
 const otherSugarUpgrades = [
-  { id: 'phero0', name: 'Scented Highways', cost: 40000, desc: 'Each achievement adds 50% more to the Pheromone Trail.',
+  { id: 'phero0', name: 'Scented Highways', cost: 40000, desc: 'Each achievement adds 50% more to the Achievement Bonus.',
     unlock: s => achievementCount(s) >= 8, effects: [{ type: 'pheromoneMultiplier', mult: 1.5 }] },
   { id: 'phero1', name: 'Pheromone Superhighways', cost: 4e6, desc: 'Each achievement adds 50% more again.',
     unlock: s => achievementCount(s) >= 16, effects: [{ type: 'pheromoneMultiplier', mult: 1.5 }] },

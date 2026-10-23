@@ -17,7 +17,7 @@ const withArticle = noun => `${/^[aeiou]/.test(noun) ? 'An' : 'A'} ${noun}`;
 const HANDLERS = {
   achievement(e, s) {
     const a = ACHIEVEMENTS.find(x => x.id === e.id);
-    toast(`Achievement: <b>${a.name}</b>. Pheromone Trail +${Math.round(pheromonePerAchievement(s) * 100)}%.`);
+    toast(`Achievement: <b>${a.name}</b>. Achievement Bonus +${Math.round(pheromonePerAchievement(s) * 100)}%.`);
   },
   expedition(e) {
     const trip = EXPEDITION_BY_ID[e.id];

@@ -37,7 +37,7 @@ export function renderRecords(s) {
     ['Sugar this run', fmt(s.sugarRun)],
     ['Sugar all time', fmt(s.sugarAll)],
     ['Clicks', fmt(s.clicks)],
-    ['Pheromone Trail', `+${Math.round(pheromoneBonus(s) * 100)}% sugar/s`],
+    ['Achievement Bonus', `+${Math.round(pheromoneBonus(s) * 100)}% sugar/s`],
     ...(s.upgrades.cartel ? [['Dairy Cartel', `+${Math.round(milkSugarBonus(s) * 100)}% sugar/s`]] : []),
     ['Expeditions', fmt(s.expDone)],
     ['Spells cast', fmt(s.spells)],

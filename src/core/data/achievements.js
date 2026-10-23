@@ -10,7 +10,7 @@ const own = (id, name, producer, count, label, verb = 'Own') =>
 const milestone = (id, name, milestoneId, label) =>
   ({ id, name, desc: `${label}.`, test: s => !!s.milestones[milestoneId] });
 
-/** Each achievement adds to the Pheromone Trail bonus. They are kept across Nuptial Flights. */
+/** Each achievement adds to the Achievement Bonus. They are kept across Nuptial Flights. */
 export const ACHIEVEMENTS = [
   sugarTotal('crumb', 'First Crumb', 1, 'your first'),
   { id: 'tap100', name: 'Tap Dancer', desc: 'Click 100 times.', test: s => s.clicks >= 100 },

@@ -24,7 +24,7 @@ export const HERITAGE = [
     effects: [{ type: 'startingMilestone', milestone: 'picnic' }] },
   { id: 'carto', name: 'Royal Cartographers', cost: 40, desc: 'Expeditions bring back triple sugar, Bug Milk and Stardust.',
     effects: [{ type: 'lootMultiplier', mult: 3 }] },
-  { id: 'ancestors', name: 'Ancestral Pheromones', cost: 100, desc: 'Each achievement adds twice as much to the Pheromone Trail.',
+  { id: 'ancestors', name: 'Ancestral Pheromones', cost: 100, desc: 'Each achievement adds twice as much to the Achievement Bonus.',
     effects: [{ type: 'pheromoneMultiplier', mult: 2 }] },
   { id: 'deed3', name: 'Supermarket Deed', cost: 1500, needs: 'deed2', desc: 'Start every run with Infiltrate the Supermarket done.',
     effects: [{ type: 'startingMilestone', milestone: 'market' }] },
