@@ -39,6 +39,8 @@ test('formatRate shows one decimal, more only when a value would round to zero',
   assert.equal(formatRate(4.93), '4.9');
   assert.equal(formatRate(0.1), '0.1');
   assert.equal(formatRate(0.02), '0.02');   // e.g. one Aphid Ranch's milk
+  assert.equal(formatRate(0.05), '0.05');   // one Wizard Tower's Mana
+  assert.equal(formatRate(0.12), '0.1');
   assert.equal(formatRate(0.004), '0.004');
   assert.equal(formatRate(999.96), '1.0K');
   assert.equal(formatRate(1234.5), '1.2K');

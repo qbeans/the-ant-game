@@ -16,13 +16,13 @@ export function formatNumber(n, decimals = 0) {
 
 /**
  * Formats a production rate with one decimal place: 0.1, 4.9, 999.5, 33.3M.
- * Values too small to show at one decimal get more: 0.02 (two), 0.004 (three).
+ * Values below 0.1 get two decimals (0.05) and values below 0.01 get three (0.004).
  */
 export function formatRate(n) {
   if (!isFinite(n)) return '∞';
   if (n === 0) return '0';
   if (n < 1000) {
-    const decimals = n >= 0.05 ? 1 : n >= 0.005 ? 2 : 3;
+    const decimals = n >= 0.1 ? 1 : n >= 0.01 ? 2 : 3;
     const text = n.toFixed(decimals);
     return text === '1000.0' ? '1.0K' : text;
   }
