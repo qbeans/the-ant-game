@@ -40,12 +40,12 @@ test('Heritage applies its start-of-run bonuses right away and after every fligh
   const s = newGame();
   s.jelly = 100;
   assert.equal(game.buyHeritage(s, 'lineage'), true);
-  assert.equal(s.owned.queen, 3);
+  assert.equal(s.owned.queen, 5);
   assert.equal(game.buyHeritage(s, 'deed'), true);
   assert.equal(game.buyHeritage(s, 'deed2'), true);
   assert.deepEqual(Object.keys(s.milestones), ['garden', 'picnic']);
   const next = game.nuptialFlight(s);
-  assert.equal(next.owned.queen, 3);
+  assert.equal(next.owned.queen, 5);
   assert.equal(game.era(next), 3);
 });
 
