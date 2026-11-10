@@ -1,5 +1,18 @@
 <meta charset="utf-8">
 <title>The Ant Game</title>
+<script>
+  // Google Analytics (GA4) page views. Only on the live GitHub Pages site, so local testing isn't counted.
+  if (location.hostname.endsWith('github.io')) {
+    const ga = document.createElement('script');
+    ga.async = true;
+    ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-SP5X59SQCT';
+    document.head.appendChild(ga);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function gtag() { window.dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', 'G-SP5X59SQCT');
+  }
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
